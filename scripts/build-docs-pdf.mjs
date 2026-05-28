@@ -1,5 +1,5 @@
 // Combine all repo markdown into a single PDF via headless Chrome.
-// Run: `yarn docs:pdf` → writes dist/chidr-interior-v2-docs.pdf
+// Run: `yarn docs:pdf` → writes docs/dist/chidr-interior-v2-docs.pdf
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
@@ -105,7 +105,7 @@ const html = `<!doctype html>
 </body>
 </html>`;
 
-const outDir = join(root, 'dist');
+const outDir = join(root, 'docs', 'dist');
 await mkdir(outDir, { recursive: true });
 const htmlPath = join(outDir, 'docs.html');
 const pdfPath = join(outDir, 'chidr-interior-v2-docs.pdf');

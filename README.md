@@ -27,7 +27,7 @@ chidr-interior-v2/
 │   └── studio/              # Sanity Studio (admin)
 ├── docs/                    # 8 markdown specs — see Documentation below
 ├── scripts/
-│   └── build-docs-pdf.mjs   # yarn docs:pdf → dist/chidr-interior-v2-docs.pdf
+│   └── build-docs-pdf.mjs   # yarn docs:pdf → docs/dist/chidr-interior-v2-docs.pdf
 └── package.json             # yarn workspace root
 ```
 

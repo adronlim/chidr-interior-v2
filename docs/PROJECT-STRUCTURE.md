@@ -56,15 +56,40 @@ chidr-interior-v2/
 │       ├── .env.example
 │       ├── .gitignore
 │       └── package.json
+│   └── studio/                       # Sanity Studio (admin)
+│       ├── sanity.config.ts          # plugins + schema registry
+│       ├── sanity.cli.ts             # CLI auth config
+│       ├── deskStructure.ts          # singletons + grouped lists
+│       ├── schemas/
+│       │   ├── index.ts
+│       │   ├── company.ts            # singleton
+│       │   ├── hero.ts               # singleton
+│       │   ├── project.ts
+│       │   ├── projectCategory.ts
+│       │   ├── teamMember.ts
+│       │   └── inquiry.ts            # read-only, written by /contact
+│       ├── scripts/
+│       │   └── seed.ts               # `yarn studio:seed`
+│       ├── tsconfig.json
+│       ├── .env.example
+│       ├── .gitignore
+│       └── package.json
 ├── docs/                             # documentation (this folder)
+│   ├── README.md                     # landing / TOC
 │   ├── ARCHITECTURE.md
 │   ├── BACKEND.md
 │   ├── CMS.md
 │   ├── DEVOPS.md
 │   ├── FRONTEND.md
 │   ├── GITHUB.md
+│   ├── PHASES.md                     # append-only milestone log
 │   ├── PROJECT-STRUCTURE.md
-│   └── UI-MOCKUP.md
+│   ├── UI-MOCKUP.md
+│   └── dist/                         # gitignored: `yarn docs:pdf` output
+│       ├── chidr-interior-v2-docs.pdf
+│       └── docs.html                 # intermediate, kept for debugging
+├── scripts/
+│   └── build-docs-pdf.mjs            # combines docs into one styled PDF
 ├── .gitignore
 ├── .nvmrc                            # Node 20
 ├── package.json                      # workspace root
@@ -72,7 +97,7 @@ chidr-interior-v2/
 └── README.md
 ```
 
-Planned, not yet present: `apps/studio/` (Sanity Studio) and `.github/` (workflows, PR template, CODEOWNERS).
+Planned, not yet present: `.github/` (workflows, PR template, CODEOWNERS).
 
 ## Workspaces
 
@@ -149,7 +174,8 @@ Docs are organized by topic, not by reader:
 
 | Doc | Owner topic |
 | --- | --- |
-| `README.md` | Entry point — quickstart + map |
+| `README.md` (root) | Entry point — quickstart + provisioning |
+| `docs/README.md` | Docs landing — TOC by topic, points at everything below |
 | `ARCHITECTURE.md` | System diagram, trust boundaries, decision log |
 | `PROJECT-STRUCTURE.md` | This file — repo layout + conventions |
 | `FRONTEND.md` | `apps/web` implementation detail |
@@ -159,6 +185,9 @@ Docs are organized by topic, not by reader:
 | `GITHUB.md` | Branch model, PR template, CI workflows |
 | `UI-MOCKUP.md` | Visual language + page wireframes |
 | `PHASES.md` | Append-only log of every milestone (commit, what landed, what's open) |
+
+Generated artifact: `docs/dist/chidr-interior-v2-docs.pdf` (via `yarn docs:pdf`,
+gitignored).
 
 When updating one doc, scan the others for stale cross-references — these
 files link to each other heavily.

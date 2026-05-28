@@ -150,7 +150,7 @@ adding any runtime dependency on the SPA bundle.
 - [scripts/build-docs-pdf.mjs](../scripts/build-docs-pdf.mjs) — converts each markdown with `marked`, assembles cover + TOC + sections, prints with headless Chrome (autodetected from `/Applications/Google Chrome.app`, falls back to Chromium and Edge)
 - `yarn docs:pdf` script at the workspace root
 - `marked` as a workspace devDep (does not ship in the SPA)
-- Output: `dist/chidr-interior-v2-docs.pdf` — ~1.2 MB, A4, 18 mm margins, brand-aligned styling (bone background tones, serif cover)
+- Output: `docs/dist/chidr-interior-v2-docs.pdf` — ~1.5 MB, A4, 18 mm margins, brand-aligned styling (bone background tones, serif cover)
 
 ### Verification
 - Output PDF starts with `%PDF-1.4` magic bytes
