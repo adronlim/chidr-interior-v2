@@ -25,16 +25,10 @@ chidr-interior-v2/
 ├── apps/
 │   ├── web/                 # Vite + React SPA (the public site)
 │   └── studio/              # Sanity Studio (admin)
-├── docs/
-│   ├── GITHUB.md            # branching, commits, CI, secrets
-│   ├── FRONTEND.md          # web app architecture + config
-│   ├── BACKEND.md           # serverless function + integrations
-│   ├── CMS.md               # Sanity schemas, roles, deploy
-│   └── UI-MOCKUP.md         # design language + page wireframes
-├── .github/
-│   ├── workflows/           # ci.yml, deploy.yml
-│   └── pull_request_template.md
-└── README.md                # this file
+├── docs/                    # 8 markdown specs — see Documentation below
+├── scripts/
+│   └── build-docs-pdf.mjs   # yarn docs:pdf → dist/chidr-interior-v2-docs.pdf
+└── package.json             # yarn workspace root
 ```
 
 > Monorepo via yarn 1 (classic) workspaces.
@@ -45,19 +39,43 @@ chidr-interior-v2/
 # 1. install
 yarn install
 
-# 2. set up env (see docs/FRONTEND.md and docs/CMS.md for the full list)
+# 2. set up env (see docs/CMS.md → Provisioning for the full walkthrough)
 cp apps/web/.env.example apps/web/.env.local
-# cp apps/studio/.env.example apps/studio/.env   # once the studio app exists
+cp apps/studio/.env.example apps/studio/.env
 
-# 3. dev — web runs on http://localhost:5173
-yarn dev
-yarn build      # tsc -b && vite build → apps/web/dist
-yarn preview    # serve the production build locally
+# 3. dev — web on :5173, studio on :3333
+yarn dev            # web
+yarn studio:dev     # studio (in a second terminal)
+
+# build / preview
+yarn build          # tsc -b && vite build → apps/web/dist
+yarn preview        # serve the web production build locally
+yarn studio:build   # bundle the studio
 ```
 
-> Without a Sanity project ID in `.env.local`, the app runs against the bundled
-> dummy data in `apps/web/src/lib/dummy-data.ts`. Add `VITE_SANITY_PROJECT_ID` to
-> switch to live content — no code changes required; the hooks auto-detect it.
+> Without `VITE_SANITY_PROJECT_ID` in `.env.local`, the web app falls through to
+> bundled dummy data (`apps/web/src/lib/dummy-data.ts`) so you can run it locally
+> with zero external setup. Add the ID and the hooks switch to live Sanity
+> content — no code change required.
+
+## First-time Sanity provisioning
+
+1. **Create the project.** Sign in at [sanity.io](https://www.sanity.io/) and
+   create a new project named "CHIDR Interior" with dataset `production`.
+2. **Copy the project ID** from the dashboard (Settings → API → Project ID) and
+   paste it into both `apps/web/.env.local` (as `VITE_SANITY_PROJECT_ID`) and
+   `apps/studio/.env` (as `SANITY_STUDIO_PROJECT_ID`).
+3. **Add CORS origins** at sanity.io → API → CORS Origins:
+   `http://localhost:5173` (web dev), `http://localhost:3333` (studio dev).
+4. **Generate a write token** at sanity.io → API → Tokens — Editor scope. Paste
+   it into `apps/studio/.env` as `SANITY_AUTH_TOKEN`. Used only by the seed script.
+5. **Seed content.** `yarn studio:seed` creates the 9 known projects + the
+   company and hero singletons + the 3 categories — all without images.
+6. **Open Studio.** `yarn studio:dev` → http://localhost:3333. Log in with Google
+   or email magic link. Upload `coverImage` + `gallery` for each project, replace
+   the DUMMY contact info, and you're done.
+7. **Restart the web app.** `yarn dev` — it'll detect the env var and read from
+   Sanity automatically.
 
 ## Documentation
 

@@ -20,17 +20,41 @@ control becomes a requirement.
 
 ## Studio setup
 
-```bash
-yarn create sanity@latest \
-  --template clean \
-  --create-project "CHIDR Interior" \
-  --dataset production \
-  --output-path apps/studio \
-  --typescript
+The Studio is already scaffolded under [apps/studio/](../apps/studio/) — yarn
+workspace `studio`, hand-written rather than generated from the Sanity template
+so the schemas and desk structure are versioned with the rest of the repo.
+
+```
+apps/studio/
+├── sanity.config.ts         # plugins (structure, vision) + schema registration
+├── sanity.cli.ts            # `sanity` CLI auth config (project ID + dataset)
+├── deskStructure.ts         # singleton items (Company, Hero) + grouped lists
+├── schemas/
+│   ├── index.ts             # exports all schemaTypes
+│   ├── company.ts           # singleton — see below
+│   ├── hero.ts              # singleton — see below
+│   ├── project.ts
+│   ├── projectCategory.ts
+│   ├── teamMember.ts
+│   └── inquiry.ts           # read-only, written by /contact function
+├── scripts/
+│   └── seed.ts              # `yarn studio:seed` — creates the 9 known projects
+├── package.json
+├── tsconfig.json
+└── .env.example
 ```
 
-Then in `apps/studio/sanity.config.ts`, add the schemas listed below and the
-desk structure for the singletons.
+### Provisioning
+
+See [README → First-time Sanity provisioning](../README.md#first-time-sanity-provisioning)
+for the end-to-end checklist. In short:
+
+1. Create the project at sanity.io (manual via dashboard, or
+   `yarn workspace studio exec sanity init` if you want the CLI to do it)
+2. Fill `apps/studio/.env` and `apps/web/.env.local` with the project ID
+3. Add CORS origins for `localhost:5173` and `localhost:3333`
+4. Generate an Editor token for the seed script
+5. `yarn studio:seed` → `yarn studio:dev` → upload images in the UI
 
 ## Schemas
 
@@ -288,7 +312,7 @@ const seed = [
 // then sanity.create() with placeholder coverImage assets pulled from the live site
 ```
 
-Run with: `yarn workspace studio exec tsx scripts/seed.ts`.
+Run with: `yarn studio:seed` (registered at the workspace root).
 
 Year/location are guesses pending the designer's confirmation — flag them
 with `> [DUMMY]` notes inline. The designer can edit each record in Studio
@@ -297,7 +321,7 @@ after first login.
 ## Studio deployment
 
 ```bash
-yarn workspace studio exec sanity deploy
+yarn studio:deploy
 # pick a hostname, e.g. "chidr" → https://chidr.sanity.studio
 ```
 

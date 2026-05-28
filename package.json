@@ -10,6 +10,10 @@
     "build": "yarn workspace web build",
     "preview": "yarn workspace web preview",
     "typecheck": "yarn workspace web typecheck",
+    "studio:dev": "yarn workspace studio dev",
+    "studio:build": "yarn workspace studio build",
+    "studio:deploy": "yarn workspace studio deploy",
+    "studio:seed": "yarn workspace studio seed",
     "docs:pdf": "node scripts/build-docs-pdf.mjs"
   },
   "engines": {

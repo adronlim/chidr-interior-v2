@@ -1,0 +1,29 @@
+{
+  "name": "studio",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "sanity dev",
+    "start": "sanity start",
+    "build": "sanity build",
+    "deploy": "sanity deploy",
+    "deploy-graphql": "sanity graphql deploy",
+    "seed": "tsx scripts/seed.ts"
+  },
+  "dependencies": {
+    "@sanity/client": "^6.22.5",
+    "@sanity/icons": "^3.5.7",
+    "@sanity/vision": "^3.70.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "sanity": "^3.70.0",
+    "styled-components": "^6.1.15"
+  },
+  "devDependencies": {
+    "@sanity/cli": "^3.70.0",
+    "@types/react": "^18.3.12",
+    "dotenv": "^16.4.7",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3"
+  }
+}
