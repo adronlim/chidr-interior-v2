@@ -24,6 +24,7 @@ export interface Project {
   featured: boolean;
   coverImage: ProjectImage;
   gallery: ProjectImage[];
+  videoUrl?: string;
   description: string[];
   order: number;
 }

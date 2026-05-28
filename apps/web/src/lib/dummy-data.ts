@@ -41,6 +41,9 @@ export const projects: Project[] = [
     featured: true,
     coverImage: { url: placeholder(1600, 1100, 'Desa Pinang'), alt: 'Desa Pinang cover' },
     gallery: gallery('Desa Pinang'),
+    // DUMMY — replace with a real walkthrough URL. "Me at the zoo" is the
+    // first YouTube video ever uploaded; safe as a permanent placeholder.
+    videoUrl: 'https://www.youtube.com/watch?v=jNQXAC9IVRw',
     description: [
       'A warm, daylight-led renovation of a corner apartment in Desa Pinang. Open kitchen with a stone island, soft oak joinery, and a quiet palette of bone and ash.',
       'The brief was a family home that aged gracefully — no statement pieces, no trend-chasing. Materials were chosen for how they would look in ten years, not ten months.',

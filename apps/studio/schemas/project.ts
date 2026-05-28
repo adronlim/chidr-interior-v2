@@ -60,6 +60,22 @@ export default defineType({
       ],
     }),
     defineField({
+      name: 'videoUrl',
+      type: 'url',
+      title: 'YouTube video URL (optional)',
+      description:
+        'Walkthrough video. Paste a YouTube link — youtube.com/watch?v=… or youtu.be/… both work.',
+      validation: (r) =>
+        r.uri({ scheme: ['http', 'https'] }).custom((value) => {
+          if (!value) return true;
+          const ok =
+            /^https?:\/\/(www\.)?(youtube\.com\/(watch\?v=|embed\/|v\/)|youtu\.be\/)[\w-]+/.test(
+              value,
+            );
+          return ok || 'Must be a YouTube link';
+        }),
+    }),
+    defineField({
       name: 'description',
       type: 'array',
       of: [{ type: 'block' }],

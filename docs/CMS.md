@@ -66,7 +66,7 @@ enforced via desk structure so only one document of each ever exists.
 | --- | --- | --- | --- |
 | `company` | [company.ts](../apps/studio/schemas/company.ts) | name, tagline, logo, address, phone, email, mapEmbedUrl, socials[], services[] | Singleton (id: `company`). Address/phone/email flagged DUMMY until designer provides. |
 | `hero` | [hero.ts](../apps/studio/schemas/hero.ts) | heading, subheading, image, ctaLabel, ctaHref | Singleton (id: `hero`). Drives the homepage hero. |
-| `project` | [project.ts](../apps/studio/schemas/project.ts) | title, slug, category (ref), year, location, areaSqft, featured, coverImage (hotspot), gallery[] (hotspot + caption), description (portable text), order | Cover required. Two orderings: manual (`order`) and year-desc. |
+| `project` | [project.ts](../apps/studio/schemas/project.ts) | title, slug, category (ref), year, location, areaSqft, featured, coverImage (hotspot), gallery[] (hotspot + caption), videoUrl (optional YouTube), description (portable text), order | Cover required. videoUrl validated as YouTube; rendered as click-to-play on the project detail page. Two orderings: manual (`order`) and year-desc. |
 | `projectCategory` | [projectCategory.ts](../apps/studio/schemas/projectCategory.ts) | title, slug, description | Seeded as Residential, Commercial, Office. |
 | `teamMember` | [teamMember.ts](../apps/studio/schemas/teamMember.ts) | name, role, photo (hotspot), bio, order | All DUMMY at seed; designer fills in. |
 | `inquiry` | [inquiry.ts](../apps/studio/schemas/inquiry.ts) | name, email, phone, message, projectInterest, submittedAt, status, notes | Every form field `readOnly` — written by the future `/contact` function. Only `status` (new/replied/archived) and `notes` editable. |

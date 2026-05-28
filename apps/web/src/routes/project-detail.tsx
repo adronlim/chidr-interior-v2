@@ -5,6 +5,7 @@ import Gallery from '@/components/gallery';
 import MetaList from '@/components/meta-list';
 import ProjectCard from '@/components/project-card';
 import SectionTitle from '@/components/section-title';
+import VideoEmbed from '@/components/video-embed';
 
 export default function ProjectDetail() {
   const { slug } = useParams();
@@ -69,6 +70,14 @@ export default function ProjectDetail() {
           </aside>
         </div>
       </section>
+
+      {/* Walkthrough video */}
+      {project.videoUrl && (
+        <section className="container-page pb-16">
+          <div className="eyebrow mb-4">Walkthrough</div>
+          <VideoEmbed url={project.videoUrl} title={`${project.title} walkthrough`} />
+        </section>
+      )}
 
       {/* Gallery */}
       {project.gallery.length > 0 && (
