@@ -1,0 +1,11 @@
+:root {
+  --color-bone: #f5f1ea;
+  --color-ink: #1a1a1a;
+  --color-ash: #8a8580;
+  --color-brass: #a6814c;
+  --color-line: #e2dcd2;
+  --color-canvas: #ffffff;
+
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}

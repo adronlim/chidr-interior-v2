@@ -1,0 +1,19 @@
+{
+  "name": "chidr-interior-v2",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "yarn workspace web dev",
+    "build": "yarn workspace web build",
+    "preview": "yarn workspace web preview",
+    "lint": "yarn workspace web lint",
+    "typecheck": "yarn workspace web typecheck"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "packageManager": "yarn@1.22.22"
+}
