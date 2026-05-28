@@ -19,6 +19,7 @@ const ORDER = [
   { file: 'docs/BACKEND.md',           title: 'Backend' },
   { file: 'docs/CMS.md',               title: 'CMS' },
   { file: 'docs/UI-MOCKUP.md',         title: 'UI Mockup' },
+  { file: 'docs/PHASES.md',            title: 'Project Phases' },
 ];
 
 const CHROME_CANDIDATES = [
