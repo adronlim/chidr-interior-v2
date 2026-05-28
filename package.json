@@ -9,11 +9,14 @@
     "dev": "yarn workspace web dev",
     "build": "yarn workspace web build",
     "preview": "yarn workspace web preview",
-    "lint": "yarn workspace web lint",
-    "typecheck": "yarn workspace web typecheck"
+    "typecheck": "yarn workspace web typecheck",
+    "docs:pdf": "node scripts/build-docs-pdf.mjs"
   },
   "engines": {
     "node": ">=20"
   },
-  "packageManager": "yarn@1.22.22"
+  "packageManager": "yarn@1.22.22",
+  "devDependencies": {
+    "marked": "^18.0.4"
+  }
 }
