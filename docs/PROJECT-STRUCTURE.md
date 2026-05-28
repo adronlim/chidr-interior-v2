@@ -90,6 +90,7 @@ chidr-interior-v2/
 │       └── docs.html                 # intermediate, kept for debugging
 ├── scripts/
 │   └── build-docs-pdf.mjs            # combines docs into one styled PDF
+├── CLAUDE.md                         # Claude-loaded project summary (~2 KB)
 ├── .gitignore
 ├── .nvmrc                            # Node 20
 ├── package.json                      # workspace root
@@ -174,6 +175,7 @@ Docs are organized by topic, not by reader:
 
 | Doc | Owner topic |
 | --- | --- |
+| `CLAUDE.md` (root) | Auto-loaded context for Claude Code: stack, commands, conventions, doc map, hard rules |
 | `README.md` (root) | Entry point — quickstart + provisioning |
 | `docs/README.md` | Docs landing — TOC by topic, points at everything below |
 | `ARCHITECTURE.md` | System diagram, trust boundaries, decision log |

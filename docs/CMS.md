@@ -58,194 +58,25 @@ for the end-to-end checklist. In short:
 
 ## Schemas
 
-Six document types. Two are **singletons** (Company, Hero) — only one document
-of each ever exists, enforced via desk structure.
+Six document types, defined under [`apps/studio/schemas/`](../apps/studio/schemas/)
+with `defineType` + `defineField`. Two are **singletons** (Company, Hero) —
+enforced via desk structure so only one document of each ever exists.
 
-### `company` (singleton)
-
-```ts
-// apps/studio/schemas/company.ts
-export default {
-  name: 'company',
-  type: 'document',
-  title: 'Company info',
-  fields: [
-    { name: 'name', type: 'string', validation: r => r.required(),
-      initialValue: 'CH iDesign & Renovation' },
-    { name: 'tagline', type: 'string',
-      description: 'Used on the homepage hero subtitle' },
-    { name: 'logo', type: 'image',
-      options: { hotspot: true }, validation: r => r.required() },
-    { name: 'logoDark', type: 'image',
-      description: 'Optional — used on dark backgrounds (footer)' },
-    { name: 'address', type: 'text', rows: 3 },     // DUMMY until provided
-    { name: 'phone', type: 'string' },              // DUMMY
-    { name: 'email', type: 'string',
-      validation: r => r.email() },                 // DUMMY
-    { name: 'mapEmbedUrl', type: 'url',
-      description: 'Google Maps embed URL for the Contact page' },
-    { name: 'socials', type: 'array', of: [{
-      type: 'object',
-      fields: [
-        { name: 'platform', type: 'string',
-          options: { list: ['instagram','facebook','tiktok','linkedin'] } },
-        { name: 'url', type: 'url' },
-      ],
-    }] },
-    { name: 'services', type: 'array', of: [{
-      type: 'object',
-      fields: [
-        { name: 'title', type: 'string' },
-        { name: 'description', type: 'text', rows: 2 },
-        { name: 'icon', type: 'string',
-          description: 'lucide-react icon name, e.g. "hammer"' },
-      ],
-    }] },
-  ],
-};
-```
-
-### `project`
-
-```ts
-// apps/studio/schemas/project.ts
-export default {
-  name: 'project',
-  type: 'document',
-  fields: [
-    { name: 'title', type: 'string', validation: r => r.required() },
-    { name: 'slug', type: 'slug', options: { source: 'title' },
-      validation: r => r.required() },
-    { name: 'category', type: 'reference', to: [{ type: 'projectCategory' }],
-      validation: r => r.required() },
-    { name: 'year', type: 'number',
-      validation: r => r.integer().min(1990).max(new Date().getFullYear() + 1) },
-    { name: 'location', type: 'string' },
-    { name: 'areaSqft', type: 'number', title: 'Area (sqft)' },
-    { name: 'featured', type: 'boolean',
-      description: 'Show on the homepage featured grid', initialValue: false },
-    { name: 'coverImage', type: 'image',
-      options: { hotspot: true }, validation: r => r.required() },
-    { name: 'gallery', type: 'array',
-      of: [{ type: 'image', options: { hotspot: true },
-             fields: [{ name: 'caption', type: 'string' }] }] },
-    { name: 'description', type: 'array', of: [{ type: 'block' }],
-      title: 'Description (rich text)' },
-    { name: 'order', type: 'number',
-      description: 'Lower numbers appear first', initialValue: 100 },
-  ],
-  orderings: [
-    { name: 'manual', title: 'Manual order',
-      by: [{ field: 'order', direction: 'asc' }] },
-    { name: 'yearDesc', title: 'Year (newest first)',
-      by: [{ field: 'year', direction: 'desc' }] },
-  ],
-  preview: {
-    select: { title: 'title', subtitle: 'location', media: 'coverImage' },
-  },
-};
-```
-
-### `projectCategory`
-
-```ts
-export default {
-  name: 'projectCategory',
-  type: 'document',
-  fields: [
-    { name: 'title', type: 'string', validation: r => r.required() },
-    { name: 'slug', type: 'slug', options: { source: 'title' } },
-    { name: 'description', type: 'text', rows: 2 },
-  ],
-};
-```
-
-Seed categories: **Residential**, **Commercial**, **Office**.
-
-### `hero` (singleton)
-
-```ts
-export default {
-  name: 'hero',
-  type: 'document',
-  title: 'Homepage hero',
-  fields: [
-    { name: 'heading', type: 'string' },          // "Spaces that quietly endure."
-    { name: 'subheading', type: 'text', rows: 2 },
-    { name: 'image', type: 'image', options: { hotspot: true } },
-    { name: 'ctaLabel', type: 'string', initialValue: 'View projects' },
-    { name: 'ctaHref', type: 'string', initialValue: '/projects' },
-  ],
-};
-```
-
-### `teamMember`
-
-```ts
-export default {
-  name: 'teamMember',
-  type: 'document',
-  fields: [
-    { name: 'name', type: 'string', validation: r => r.required() },
-    { name: 'role', type: 'string' },
-    { name: 'photo', type: 'image', options: { hotspot: true } },
-    { name: 'bio', type: 'text', rows: 4 },
-    { name: 'order', type: 'number', initialValue: 100 },
-  ],
-};
-```
-
-### `inquiry` (read-only — written by the contact-form function)
-
-```ts
-export default {
-  name: 'inquiry',
-  type: 'document',
-  fields: [
-    { name: 'name', type: 'string', readOnly: true },
-    { name: 'email', type: 'string', readOnly: true },
-    { name: 'phone', type: 'string', readOnly: true },
-    { name: 'message', type: 'text', readOnly: true },
-    { name: 'projectInterest', type: 'string', readOnly: true },
-    { name: 'submittedAt', type: 'datetime', readOnly: true },
-    { name: 'status', type: 'string',
-      options: { list: ['new', 'replied', 'archived'] }, initialValue: 'new' },
-    { name: 'notes', type: 'text', rows: 3,
-      description: 'Internal notes — only the team sees these' },
-  ],
-  orderings: [{
-    name: 'newest',
-    by: [{ field: 'submittedAt', direction: 'desc' }],
-  }],
-};
-```
-
-`status` and `notes` are editable; everything else is locked so the designer
-can't accidentally rewrite history of a real inquiry.
+| Schema | Source | Key fields | Notes |
+| --- | --- | --- | --- |
+| `company` | [company.ts](../apps/studio/schemas/company.ts) | name, tagline, logo, address, phone, email, mapEmbedUrl, socials[], services[] | Singleton (id: `company`). Address/phone/email flagged DUMMY until designer provides. |
+| `hero` | [hero.ts](../apps/studio/schemas/hero.ts) | heading, subheading, image, ctaLabel, ctaHref | Singleton (id: `hero`). Drives the homepage hero. |
+| `project` | [project.ts](../apps/studio/schemas/project.ts) | title, slug, category (ref), year, location, areaSqft, featured, coverImage (hotspot), gallery[] (hotspot + caption), description (portable text), order | Cover required. Two orderings: manual (`order`) and year-desc. |
+| `projectCategory` | [projectCategory.ts](../apps/studio/schemas/projectCategory.ts) | title, slug, description | Seeded as Residential, Commercial, Office. |
+| `teamMember` | [teamMember.ts](../apps/studio/schemas/teamMember.ts) | name, role, photo (hotspot), bio, order | All DUMMY at seed; designer fills in. |
+| `inquiry` | [inquiry.ts](../apps/studio/schemas/inquiry.ts) | name, email, phone, message, projectInterest, submittedAt, status, notes | Every form field `readOnly` — written by the future `/contact` function. Only `status` (new/replied/archived) and `notes` editable. |
 
 ## Singleton enforcement
 
-In `apps/studio/desk/structure.ts`:
-
-```ts
-import { StructureBuilder as S } from 'sanity/desk';
-
-export const structure = (S: S) =>
-  S.list().title('Content').items([
-    S.listItem().title('Company info').child(
-      S.document().schemaType('company').documentId('company'),
-    ),
-    S.listItem().title('Homepage hero').child(
-      S.document().schemaType('hero').documentId('hero'),
-    ),
-    S.divider(),
-    S.documentTypeListItem('project').title('Projects'),
-    S.documentTypeListItem('projectCategory').title('Categories'),
-    S.documentTypeListItem('teamMember').title('Team'),
-    S.divider(),
-    S.documentTypeListItem('inquiry').title('Inquiries (from contact form)'),
-  ]);
-```
+Pinned in [`apps/studio/deskStructure.ts`](../apps/studio/deskStructure.ts):
+Company info and Homepage hero are list items with fixed document IDs (so
+they can't be duplicated); projects, categories, team members appear as type
+lists below; inquiries get their own section.
 
 ## Roles and login
 

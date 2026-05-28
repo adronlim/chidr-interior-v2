@@ -5,6 +5,7 @@ this directory — group them by purpose mentally, not by folder.
 
 ## Where to start
 
+- **Claude Code session?** → `CLAUDE.md` at the repo root is auto-loaded and summarizes everything below
 - **New to the project?** → [ARCHITECTURE.md](ARCHITECTURE.md) for the system view, then [PROJECT-STRUCTURE.md](PROJECT-STRUCTURE.md) for the repo layout
 - **Tracking what's done and what's next?** → [PHASES.md](PHASES.md)
 - **Building the SPA?** → [FRONTEND.md](FRONTEND.md)
