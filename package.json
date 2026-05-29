@@ -14,7 +14,9 @@
     "studio:build": "yarn workspace studio build",
     "studio:deploy": "yarn workspace studio deploy",
     "studio:seed": "yarn workspace studio seed",
-    "docs:pdf": "node scripts/build-docs-pdf.mjs"
+    "docs:pdf": "node scripts/build-docs-pdf.mjs",
+    "log:config": "node scripts/log-config-changes.mjs",
+    "postinstall": "git config core.hooksPath .githooks 2>/dev/null || true"
   },
   "engines": {
     "node": ">=20"

@@ -23,7 +23,15 @@ yarn studio:build     # bundle studio
 yarn studio:seed      # creates 9 projects + 3 categories + company/hero singletons
 yarn typecheck
 yarn docs:pdf         # → docs/dist/chidr-interior-v2-docs.pdf
+yarn log:config       # preview which staged files would log to CONFIG-LOG.md
 ```
+
+## Automation
+
+- `yarn install` sets `core.hooksPath=.githooks`. Pre-commit hook
+  (`.githooks/pre-commit`) auto-appends a row to `docs/CONFIG-LOG.md` whenever
+  a commit touches workspace/build/CI/hosting config files. Bypass with
+  `git commit --no-verify` if needed.
 
 ## Repo layout
 

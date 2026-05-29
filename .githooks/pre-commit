@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# Auto-log configuration changes when a commit touches workspace/build/CI files.
+# See scripts/log-config-changes.mjs for matched patterns.
+# Bypass for one commit: git commit --no-verify
+set -e
+
+# Prefer the project's nvm-installed node if PATH is sparse (some IDE shells)
+if ! command -v node >/dev/null 2>&1; then
+  for candidate in \
+    "$HOME/.nvm/versions/node/$(cat .nvmrc 2>/dev/null || echo v20)*/bin/node" \
+    "/usr/local/bin/node" \
+    "/opt/homebrew/bin/node"; do
+    for n in $candidate; do
+      [ -x "$n" ] && PATH="$(dirname "$n"):$PATH" && break 2
+    done
+  done
+fi
+
+if ! command -v node >/dev/null 2>&1; then
+  echo "pre-commit: node not found — skipping config log (commit allowed)" >&2
+  exit 0
+fi
+
+node scripts/log-config-changes.mjs --commit

@@ -89,7 +89,10 @@ chidr-interior-v2/
 │       ├── chidr-interior-v2-docs.pdf
 │       └── docs.html                 # intermediate, kept for debugging
 ├── scripts/
-│   └── build-docs-pdf.mjs            # combines docs into one styled PDF
+│   ├── build-docs-pdf.mjs            # combines docs into one styled PDF
+│   └── log-config-changes.mjs        # pre-commit hook target — appends to CONFIG-LOG.md
+├── .githooks/
+│   └── pre-commit                    # invokes log-config-changes.mjs --commit
 ├── CLAUDE.md                         # Claude-loaded project summary (~2 KB)
 ├── .gitignore
 ├── .nvmrc                            # Node 20
@@ -187,6 +190,7 @@ Docs are organized by topic, not by reader:
 | `GITHUB.md` | Branch model, PR template, CI workflows |
 | `UI-MOCKUP.md` | Visual language + page wireframes |
 | `PHASES.md` | Append-only log of every milestone (commit, what landed, what's open) |
+| `CONFIG-LOG.md` | Auto-appended pre-commit when workspace/build/CI config files change |
 
 Generated artifact: `docs/dist/chidr-interior-v2-docs.pdf` (via `yarn docs:pdf`,
 gitignored).
