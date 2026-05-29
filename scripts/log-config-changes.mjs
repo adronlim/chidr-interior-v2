@@ -59,18 +59,10 @@ function stagedFiles() {
   return out.split('\n').filter(Boolean);
 }
 
-function readSubject() {
-  // commit-msg hook would give us argv[1]; pre-commit doesn't have the message
-  // yet. Fall back to whatever's already in COMMIT_EDITMSG (e.g. -m flag,
-  // merge templates) — otherwise leave blank.
-  const path = resolve(root, '.git/COMMIT_EDITMSG');
-  if (!existsSync(path)) return '';
-  const first = readFileSync(path, 'utf8')
-    .split('\n')
-    .map((l) => l.trim())
-    .find((l) => l && !l.startsWith('#'));
-  return first ?? '';
-}
+// Note: pre-commit hooks can't reliably see the current commit message —
+// COMMIT_EDITMSG isn't written until after pre-commit runs (or carries the
+// previous commit's message). Entries here are date + files only; cross-
+// reference git log by date if you need the message.
 
 function pad(n) {
   return String(n).padStart(2, '0');
@@ -101,9 +93,8 @@ function ensureLog(path) {
   writeFileSync(path, HEADER);
 }
 
-function appendEntry(path, ts, subject, files) {
-  const subjectLine = subject ? ` · ${subject}` : '';
-  const block = `\n### ${ts}${subjectLine}\n${files.map((f) => `- \`${f}\``).join('\n')}\n`;
+function appendEntry(path, ts, files) {
+  const block = `\n### ${ts}\n${files.map((f) => `- \`${f}\``).join('\n')}\n`;
   appendFileSync(path, block);
 }
 
@@ -124,6 +115,6 @@ if (!COMMIT_MODE) {
 }
 
 ensureLog(logPath);
-appendEntry(logPath, timestamp(), readSubject(), files);
+appendEntry(logPath, timestamp(), files);
 execSync(`git add "${logPath}"`);
 console.log(`✓ Appended ${files.length} config change(s) to docs/CONFIG-LOG.md`);

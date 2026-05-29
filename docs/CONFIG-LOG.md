@@ -12,6 +12,6 @@ Newest entries are appended at the bottom. To re-run manually for a preview:
 
 ---
 
-### 2026-05-29 23:44 · feat(studio): rewrite seed script with pre-flight checks
+### 2026-05-29 23:44
 - `.githooks/pre-commit`
 - `package.json`
