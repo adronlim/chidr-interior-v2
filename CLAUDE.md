@@ -79,4 +79,4 @@ project titles + placeholder.co images. Sanity provisioning is in progress
 - `docs/dist/` and `dist/` are generated, gitignored — don't hand-edit.
 - Real photos arrive via Sanity Studio uploads, not via committed assets.
 - When adding a new data type, update **all four**: `src/lib/types.ts`, `src/lib/dummy-data.ts`, `src/lib/queries.ts`, `src/hooks/use-foo.ts`.
-- **Never put concrete Sanity project IDs, user IDs, tokens, or other deployment-specific identifiers in committed markdown.** They live only in `.env` files (gitignored). Refer to them generically — e.g. "the CHIDR project", "the value stored in `apps/studio/.env`".
+- **Never put real Sanity project IDs, user IDs, tokens, or other deployment-specific identifiers in committed markdown.** Real values live only in `.env` files (gitignored). Use obvious dummy IDs when an example aids clarity: project ids → `abc12def` (8 chars), user ids → `g-XXXXXXXXXX`. Flag the dummy nature inline ("dummy; real value in `.env`").
