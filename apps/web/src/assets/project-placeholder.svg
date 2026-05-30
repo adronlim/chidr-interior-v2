@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-label="Image coming soon">
+  <rect width="800" height="800" fill="#F5F1EA"/>
+  <g fill="none" stroke="#8A8580" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="248" y="290" width="304" height="220" rx="10"/>
+    <circle cx="332" cy="358" r="24"/>
+    <path d="M258 500 L356 408 L420 466 L488 396 L542 452 L542 500"/>
+  </g>
+  <text x="400" y="566" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-size="32" letter-spacing="6" fill="#8A8580">IMAGE COMING SOON</text>
+</svg>
