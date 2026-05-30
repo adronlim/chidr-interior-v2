@@ -1,0 +1,13 @@
+# Generated / gitignored output
+node_modules/
+dist/
+apps/*/dist/
+docs/dist/
+
+# Lockfiles & env
+yarn.lock
+**/.env
+**/.env.*
+
+# Append-only milestone log (avoid noisy reflow)
+docs/PHASES.md
