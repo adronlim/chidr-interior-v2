@@ -11,12 +11,12 @@ export default function Gallery({ images }: Props) {
 
   const close = useCallback(() => setOpenIndex(null), []);
   const next = useCallback(
-    () => setOpenIndex((i) => (i === null ? null : (i + 1) % images.length)),
-    [images.length],
+    () => setOpenIndex((i) => (i === null ? null : (i + 1) % images?.length)),
+    [images?.length],
   );
   const prev = useCallback(
-    () => setOpenIndex((i) => (i === null ? null : (i - 1 + images.length) % images.length)),
-    [images.length],
+    () => setOpenIndex((i) => (i === null ? null : (i - 1 + images?.length) % images?.length)),
+    [images?.length],
   );
 
   useEffect(() => {
@@ -34,10 +34,16 @@ export default function Gallery({ images }: Props) {
     };
   }, [openIndex, close, next, prev]);
 
+  // Guard placed after all hooks (Rules of Hooks) but before any render
+  // logic — no gallery without a non-empty images array.
+  if (!Array.isArray(images) || images.length === 0) {
+    return null;
+  }
+
   return (
     <>
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {images.map((img, i) => (
+        {images?.map((img, i) => (
           <button
             key={i}
             type="button"
@@ -45,8 +51,8 @@ export default function Gallery({ images }: Props) {
             className="block aspect-[4/3] overflow-hidden bg-line group"
           >
             <img
-              src={img.url}
-              alt={img.alt ?? `Image ${i + 1}`}
+              src={img?.url}
+              alt={img?.alt ?? `Image ${i + 1}`}
               loading="lazy"
               className="w-full h-full object-cover image-hover"
             />
@@ -79,8 +85,8 @@ export default function Gallery({ images }: Props) {
             <ChevronLeft size={28} />
           </button>
           <img
-            src={images[openIndex].url}
-            alt={images[openIndex].alt ?? ''}
+            src={images?.[openIndex]?.url}
+            alt={images?.[openIndex]?.alt ?? ''}
             className="max-h-full max-w-full object-contain"
             onClick={(e) => e.stopPropagation()}
           />

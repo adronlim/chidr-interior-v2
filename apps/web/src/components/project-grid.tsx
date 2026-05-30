@@ -7,6 +7,11 @@ interface Props {
 }
 
 export default function ProjectGrid({ projects, variant = 'grid' }: Props) {
+  // Guard: nothing to render without a non-empty projects array.
+  if (!Array.isArray(projects) || projects.length === 0) {
+    return null;
+  }
+
   if (variant === 'masonry') {
     return (
       <div className="masonry">

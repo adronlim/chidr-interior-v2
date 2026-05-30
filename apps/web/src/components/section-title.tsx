@@ -7,6 +7,11 @@ interface Props {
 }
 
 export default function SectionTitle({ eyebrow, children, align = 'left' }: Props) {
+  // Guard: don't render an empty heading.
+  if (!children) {
+    return null;
+  }
+
   return (
     <div className={align === 'center' ? 'text-center' : ''}>
       {eyebrow && <div className="eyebrow mb-3">{eyebrow}</div>}

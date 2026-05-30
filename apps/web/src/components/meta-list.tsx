@@ -4,6 +4,11 @@ interface Item {
 }
 
 export default function MetaList({ items }: { items: Item[] }) {
+  // Guard: no list when items are missing or empty.
+  if (!Array.isArray(items) || items.length === 0) {
+    return null;
+  }
+
   return (
     <dl className="divide-y divide-line border-t border-b border-line">
       {items.map((item) => (

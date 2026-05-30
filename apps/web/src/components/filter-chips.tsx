@@ -7,9 +7,12 @@ interface Props {
 }
 
 export default function FilterChips({ categories, active, onChange }: Props) {
+  // Guard: defend against undefined / non-array categories. The "All" chip
+  // is always shown, even if the categories list is empty or still loading.
+  const safeCategories = Array.isArray(categories) ? categories : [];
   const items: { slug: CategorySlug | null; label: string }[] = [
     { slug: null, label: 'All' },
-    ...categories.map((c) => ({ slug: c.slug, label: c.title })),
+    ...safeCategories.map((c) => ({ slug: c.slug, label: c.title })),
   ];
 
   return (

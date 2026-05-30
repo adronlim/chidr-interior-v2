@@ -13,7 +13,8 @@ const PATTERNS = [
   /youtube\.com\/v\/([\w-]+)/,
 ];
 
-function parseYouTubeId(url: string): string | null {
+function parseYouTubeId(url: string | undefined | null): string | null {
+  if (!url || typeof url !== 'string') return null;
   for (const pattern of PATTERNS) {
     const match = url.match(pattern);
     if (match) return match[1];
@@ -23,8 +24,9 @@ function parseYouTubeId(url: string): string | null {
 
 export default function VideoEmbed({ url, title = 'Project walkthrough' }: Props) {
   const [playing, setPlaying] = useState(false);
-  const id = parseYouTubeId(url);
 
+  // Guard: don't render anything for an empty / non-YouTube URL.
+  const id = parseYouTubeId(url);
   if (!id) return null;
 
   if (!playing) {
