@@ -51,11 +51,12 @@ scripts/build-docs-pdf.mjs
 - **Singletons** (`company`, `hero`) enforced via `apps/studio/deskStructure.ts`.
 - **Docs naming:** UPPER-CASE for markdown (README, ARCHITECTURE, etc.); kebab-case is for source.
 
-## Sanity state (today)
+## Status
 
-Frontend currently runs against bundled dummy data — 9 real chidr.com.my
-project titles + placeholder.co images. Sanity provisioning is in progress
-(see `docs/PHASES.md` Phase 5; checklist in root `README.md`).
+Current phase, active blockers, and recent commits: see `docs/PHASES.md`.
+Frontend falls back to dummy data (`apps/web/src/lib/dummy-data.ts`) until
+`VITE_SANITY_PROJECT_ID` is set in `apps/web/.env.local` — no code change
+needed to flip; hooks auto-detect.
 
 ## Where to read for X
 
@@ -69,7 +70,31 @@ project titles + placeholder.co images. Sanity provisioning is in progress
 | Environments, deploys, env vars, runbook | `docs/DEVOPS.md` |
 | Branching, PR template, CI workflows, secrets | `docs/GITHUB.md` |
 | Design tokens, page wireframes | `docs/UI-MOCKUP.md` |
+| Code conventions, validation patterns, commit format | `docs/STANDARDS.md` |
 | Milestone log (append-only) | `docs/PHASES.md` |
+
+## Common pitfalls
+
+Lessons earned the hard way — check these before debugging mysterious errors.
+
+- **Rules of Hooks**: validation guards belong **after** all `useState` /
+  `useCallback` / `useEffect` calls, not before. An early return before
+  hooks silently breaks the component when input flips between valid and
+  invalid across renders. See `docs/STANDARDS.md`.
+- **Sanity 401 `projectUserNotFoundError`**: the auth token's owner isn't a
+  member of the target project. The token must be generated from **inside**
+  the project's API page on sanity.io — not from the personal account
+  dashboard. `yarn studio:seed`'s pre-flight check will list which projects
+  the current token CAN access; if the list is empty, the token came from
+  the wrong sanity.io login. Full recovery path in `docs/PHASES.md` Phase 5.
+- **Linter re-adds `?.`**: the auto-format in this environment adds optional
+  chaining to every property access regardless of TS narrowing. Don't fight
+  it — the explicit guards in `docs/STANDARDS.md` are the real safety net.
+- **Real IDs in markdown**: forbidden. Use the dummies (`abc12def` for
+  project IDs, `g-XXXXXXXXXX` for user IDs) and flag inline as dummy. Real
+  values live in `apps/*/.env*` only.
+- **PHASES.md is append-only**: wrap a phase by appending a section; don't
+  silently rewrite past entries except for factual fixes.
 
 ## Hard rules
 

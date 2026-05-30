@@ -87,6 +87,7 @@ yarn studio:build   # bundle the studio
 - [docs/BACKEND.md](docs/BACKEND.md) — why we don't run a server, plus the contact-form function
 - [docs/CMS.md](docs/CMS.md) — Sanity schemas, Studio setup, designer login, content migration
 - [docs/UI-MOCKUP.md](docs/UI-MOCKUP.md) — design language, color/type tokens, page wireframes
+- [docs/STANDARDS.md](docs/STANDARDS.md) — code-level conventions: validation patterns, hooks ordering, perf budget, commit format
 - [docs/PHASES.md](docs/PHASES.md) — running log of every milestone: objective, what landed, verification, what's open
 
 ## Source content from the existing site

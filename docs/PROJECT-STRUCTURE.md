@@ -189,6 +189,7 @@ Docs are organized by topic, not by reader:
 | `DEVOPS.md` | Environments, deploys, monitoring, runbook |
 | `GITHUB.md` | Branch model, PR template, CI workflows |
 | `UI-MOCKUP.md` | Visual language + page wireframes |
+| `STANDARDS.md` | Code-level conventions — validation, hooks order, ?. policy, perf budget, commits |
 | `PHASES.md` | Append-only log of every milestone (commit, what landed, what's open) |
 | `CONFIG-LOG.md` | Auto-appended pre-commit when workspace/build/CI config files change |
 

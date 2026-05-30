@@ -20,6 +20,7 @@ this directory — group them by purpose mentally, not by folder.
 | --- | --- |
 | [ARCHITECTURE.md](ARCHITECTURE.md) | System diagram, trust boundaries, decision log, failure modes |
 | [PROJECT-STRUCTURE.md](PROJECT-STRUCTURE.md) | Repo tree, file naming conventions, "where to put new things" |
+| [STANDARDS.md](STANDARDS.md) | Code-level conventions: validation patterns, hooks ordering, perf budget, commit format |
 | [PHASES.md](PHASES.md) | Append-only log of every milestone |
 
 ### Implementation
