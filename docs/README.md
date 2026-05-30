@@ -40,6 +40,7 @@ this directory — group them by purpose mentally, not by folder.
 | File | Topic |
 | --- | --- |
 | [UI-MOCKUP.md](UI-MOCKUP.md) | Design language, color/type/spacing tokens, page wireframes |
+| [DESIGN-REVAMP.md](DESIGN-REVAMP.md) | Inner-inspired revamp: palette mapping, in-house motion system, per-page composition |
 
 ## Generated PDF
 
