@@ -7,19 +7,24 @@ interface Props {
 }
 
 export default function Gallery({ images }: Props) {
+  // Degrade gracefully: tolerate a missing / non-array images prop. An empty
+  // list simply renders no thumbnails instead of hiding the section. Derived
+  // before the hooks so the callbacks below depend on a stable array length.
+  const safeImages = Array.isArray(images) ? images : [];
+
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const close = useCallback(() => setOpenIndex(null), []);
   const next = useCallback(
-    () => setOpenIndex((index) => (index === null ? null : (index + 1) % images?.length)),
-    [images?.length],
+    () => setOpenIndex((index) => (index === null ? null : (index + 1) % safeImages.length)),
+    [safeImages.length],
   );
   const prev = useCallback(
     () =>
       setOpenIndex((index) =>
-        index === null ? null : (index - 1 + images?.length) % images?.length,
+        index === null ? null : (index - 1 + safeImages.length) % safeImages.length,
       ),
-    [images?.length],
+    [safeImages.length],
   );
 
   useEffect(() => {
@@ -37,16 +42,14 @@ export default function Gallery({ images }: Props) {
     };
   }, [openIndex, close, next, prev]);
 
-  // Guard placed after all hooks (Rules of Hooks) but before any render
-  // logic — no gallery without a non-empty images array.
-  if (!Array.isArray(images) || images.length === 0) {
-    return null;
-  }
+  // The image currently open in the lightbox, or null when nothing is open or
+  // the index falls outside the (possibly empty) list.
+  const activeImage = openIndex === null ? null : safeImages[openIndex];
 
   return (
     <>
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {images?.map((img, i) => (
+        {safeImages.map((img, i) => (
           <button
             key={i}
             type="button"
@@ -63,7 +66,7 @@ export default function Gallery({ images }: Props) {
         ))}
       </div>
 
-      {openIndex !== null && (
+      {activeImage && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-ink/95 p-6"
           onClick={close}
@@ -88,8 +91,8 @@ export default function Gallery({ images }: Props) {
             <ChevronLeft size={28} />
           </button>
           <img
-            src={images?.[openIndex]?.url}
-            alt={images?.[openIndex]?.alt ?? ''}
+            src={activeImage?.url}
+            alt={activeImage?.alt ?? ''}
             className="max-h-full max-w-full object-contain"
             onClick={(event) => event.stopPropagation()}
           />
