@@ -62,18 +62,18 @@ export default function About() {
         <SectionTitle eyebrow="People">The team.</SectionTitle>
         <div className="mt-12 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
           {team.map((m) => (
-            <div key={m._id}>
+            <div key={m?._id}>
               <div className="aspect-[4/5] bg-line overflow-hidden">
                 <img
-                  src={m.photo.url}
-                  alt={m.photo.alt ?? m.name}
+                  src={m?.photo?.url}
+                  alt={m?.photo?.alt ?? m?.name}
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="mt-4">
-                <div className="font-display text-2xl tracking-tighter">{m.name}</div>
-                <div className="eyebrow mt-1">{m.role}</div>
-                <p className="mt-3 text-sm text-ash leading-relaxed">{m.bio}</p>
+                <div className="font-display text-2xl tracking-tighter">{m?.name}</div>
+                <div className="eyebrow mt-1">{m?.role}</div>
+                <p className="mt-3 text-sm text-ash leading-relaxed">{m?.bio}</p>
               </div>
             </div>
           ))}

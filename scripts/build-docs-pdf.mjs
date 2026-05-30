@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 import { marked } from 'marked';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+const __dirname = dirname(fileURLToPath(import.meta?.url));
 const root = resolve(__dirname, '..');
 
 const ORDER = [

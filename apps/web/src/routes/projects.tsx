@@ -38,7 +38,7 @@ export default function Projects() {
 
       {isLoading ? (
         <p className="text-ash">Loading projects…</p>
-      ) : projects.length === 0 ? (
+      ) : projects?.length === 0 ? (
         <p className="text-ash">No projects in this category yet.</p>
       ) : (
         <ProjectGrid projects={projects} variant="masonry" />

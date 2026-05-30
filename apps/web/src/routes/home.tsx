@@ -33,8 +33,8 @@ export default function Home() {
             <div className="aspect-[4/5] bg-line overflow-hidden">
               {hero?.image && (
                 <img
-                  src={hero.image.url}
-                  alt={hero.image.alt ?? ''}
+                  src={hero?.image?.url}
+                  alt={hero?.image?.alt ?? ''}
                   className="w-full h-full object-cover"
                 />
               )}

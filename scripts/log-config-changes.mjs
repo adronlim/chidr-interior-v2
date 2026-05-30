@@ -94,13 +94,13 @@ function ensureLog(path) {
 }
 
 function appendEntry(path, ts, files) {
-  const block = `\n### ${ts}\n${files.map((f) => `- \`${f}\``).join('\n')}\n`;
+  const block = `\n### ${ts}\n${files?.map((f) => `- \`${f}\``).join('\n')}\n`;
   appendFileSync(path, block);
 }
 
 const files = stagedFiles().filter(isConfig);
 
-if (files.length === 0) {
+if (files?.length === 0) {
   if (!COMMIT_MODE) console.log('No config changes staged.');
   process.exit(0);
 }
@@ -108,7 +108,7 @@ if (files.length === 0) {
 const logPath = resolve(root, 'docs/CONFIG-LOG.md');
 
 if (!COMMIT_MODE) {
-  console.log(`Would log ${files.length} config file(s) to docs/CONFIG-LOG.md:`);
+  console.log(`Would log ${files?.length} config file(s) to docs/CONFIG-LOG.md:`);
   for (const f of files) console.log(`  - ${f}`);
   console.log('\n(dry-run — pass --commit, or use the pre-commit hook, to write)');
   process.exit(0);
@@ -117,4 +117,4 @@ if (!COMMIT_MODE) {
 ensureLog(logPath);
 appendEntry(logPath, timestamp(), files);
 execSync(`git add "${logPath}"`);
-console.log(`✓ Appended ${files.length} config change(s) to docs/CONFIG-LOG.md`);
+console.log(`✓ Appended ${files?.length} config change(s) to docs/CONFIG-LOG.md`);

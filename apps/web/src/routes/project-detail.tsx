@@ -27,12 +27,12 @@ export default function ProjectDetail() {
   }
 
   const meta = [
-    { label: 'Year', value: String(project.year) },
-    { label: 'Location', value: project.location },
-    ...(project.areaSqft
-      ? [{ label: 'Area', value: `${project.areaSqft.toLocaleString()} sqft` }]
+    { label: 'Year', value: String(project?.year) },
+    { label: 'Location', value: project?.location },
+    ...(project?.areaSqft
+      ? [{ label: 'Area', value: `${project?.areaSqft?.toLocaleString()} sqft` }]
       : []),
-    { label: 'Category', value: project.category.title },
+    { label: 'Category', value: project?.category?.title },
   ];
 
   return (
@@ -40,8 +40,8 @@ export default function ProjectDetail() {
       {/* Hero */}
       <section className="bg-line">
         <img
-          src={project.coverImage.url}
-          alt={project.coverImage.alt ?? project.title}
+          src={project?.coverImage?.url}
+          alt={project?.coverImage?.alt ?? project?.title}
           className="w-full h-[60vh] lg:h-[80vh] object-cover"
         />
       </section>
@@ -51,13 +51,13 @@ export default function ProjectDetail() {
         <div className="grid lg:grid-cols-12 gap-12">
           <div className="lg:col-span-7">
             <div className="eyebrow mb-3">
-              {project.category.title} · {project.year}
+              {project?.category.title} · {project?.year}
             </div>
             <h1 className="font-display text-5xl lg:text-7xl tracking-tighter leading-[0.95]">
-              {project.title}
+              {project?.title}
             </h1>
             <div className="mt-10 space-y-5 max-w-prose text-ink/85 leading-relaxed">
-              {project.description.map((p, i) => (
+              {project?.description?.map((p, i) => (
                 <p key={i}>{p}</p>
               ))}
             </div>
@@ -72,29 +72,29 @@ export default function ProjectDetail() {
       </section>
 
       {/* Walkthrough video */}
-      {project.videoUrl && (
+      {project?.videoUrl && (
         <section className="container-page pb-16">
           <div className="eyebrow mb-4">Walkthrough</div>
-          <VideoEmbed url={project.videoUrl} title={`${project.title} walkthrough`} />
+          <VideoEmbed url={project?.videoUrl} title={`${project?.title} walkthrough`} />
         </section>
       )}
 
       {/* Gallery */}
-      {project.gallery.length > 0 && (
+      {project?.gallery?.length > 0 && (
         <section className="container-page pb-20">
-          <Gallery images={project.gallery} />
+          <Gallery images={project?.gallery} />
         </section>
       )}
 
       <div className="hairline" />
 
       {/* Related */}
-      {project.related.length > 0 && (
+      {project?.related?.length > 0 && (
         <section className="container-page py-20 lg:py-section">
           <SectionTitle eyebrow="You may also like">More work.</SectionTitle>
           <div className="mt-12 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
-            {project.related.map((r) => (
-              <ProjectCard key={r._id} project={r} />
+            {project?.related?.map((r) => (
+              <ProjectCard key={r?._id} project={r} />
             ))}
           </div>
         </section>

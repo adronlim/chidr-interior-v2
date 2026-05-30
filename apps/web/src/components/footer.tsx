@@ -18,37 +18,37 @@ export default function Footer() {
       <div className="container-page py-20 grid gap-12 lg:grid-cols-4">
         <div className="lg:col-span-2">
           <div className="font-display text-3xl tracking-tighter">
-            {company.logoWordmark.primary}
-            {company.logoWordmark.secondary && (
-              <span className="text-ash"> {company.logoWordmark.secondary}</span>
+            {company?.logoWordmark?.primary}
+            {company?.logoWordmark?.secondary && (
+              <span className="text-ash"> {company?.logoWordmark?.secondary}</span>
             )}
           </div>
-          <p className="mt-4 max-w-md text-ash">{company.tagline}</p>
+          <p className="mt-4 max-w-md text-ash">{company?.tagline}</p>
         </div>
 
         <div>
           <h4 className="eyebrow text-ash mb-4">Visit</h4>
-          <p className="whitespace-pre-line text-sm leading-relaxed">{company.address}</p>
+          <p className="whitespace-pre-line text-sm leading-relaxed">{company?.address}</p>
           <p className="mt-4 text-sm">
-            <a href={`tel:${company.phone.replace(/\s/g, '')}`}>{company.phone}</a>
+            <a href={`tel:${company?.phone.replace(/\s/g, '')}`}>{company?.phone}</a>
           </p>
           <p className="text-sm">
-            <a href={`mailto:${company.email}`}>{company.email}</a>
+            <a href={`mailto:${company?.email}`}>{company?.email}</a>
           </p>
         </div>
 
         <div>
           <h4 className="eyebrow text-ash mb-4">Follow</h4>
           <ul className="flex gap-4">
-            {company.socials.map((s) => {
-              const Icon = ICON[s.platform];
+            {company?.socials.map((s) => {
+              const Icon = ICON[s?.platform];
               return (
-                <li key={s.platform}>
+                <li key={s?.platform}>
                   <a
-                    href={s.url}
+                    href={s?.url}
                     target="_blank"
                     rel="noreferrer"
-                    aria-label={s.platform}
+                    aria-label={s?.platform}
                     className="inline-flex items-center justify-center w-10 h-10 border border-ash/30 hover:border-bone transition-colors"
                   >
                     <Icon size={16} />
@@ -69,7 +69,7 @@ export default function Footer() {
 
       <div className="border-t border-ash/20">
         <div className="container-page py-6 text-xs text-ash flex flex-wrap items-center justify-between gap-3">
-          <span>© {new Date().getFullYear()} {company.name}. All rights reserved.</span>
+          <span>© {new Date().getFullYear()} {company?.name}. All rights reserved.</span>
           <span>Made in Penang.</span>
         </div>
       </div>
