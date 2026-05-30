@@ -1,0 +1,17 @@
+# Generated / gitignored output
+node_modules/
+dist/
+apps/*/dist/
+docs/dist/
+apps/studio/.sanity/
+
+# Tooling / skills (not repo source)
+.claude/
+
+# Lockfiles & env
+yarn.lock
+**/.env
+**/.env.*
+
+# Append-only milestone log (avoid noisy reflow)
+docs/PHASES.md

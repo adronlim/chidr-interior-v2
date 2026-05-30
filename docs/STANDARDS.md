@@ -5,11 +5,12 @@ validate, what counts as "must stay green" on a PR, and how commits should
 be shaped.
 
 Complementary reading:
-- [ARCHITECTURE.md](ARCHITECTURE.md) — *why* the stack looks like this
-- [PROJECT-STRUCTURE.md](PROJECT-STRUCTURE.md) — *where* things go
+
+- [ARCHITECTURE.md](ARCHITECTURE.md) — _why_ the stack looks like this
+- [PROJECT-STRUCTURE.md](PROJECT-STRUCTURE.md) — _where_ things go
 - [CLAUDE.md](../CLAUDE.md) — quick 30-second summary for AI sessions
 
-This doc covers the third axis: *how* code is written.
+This doc covers the third axis: _how_ code is written.
 
 ---
 
@@ -57,7 +58,9 @@ function Gallery({ images }: Props) {
 
   const [openIndex, setOpenIndex] = useState(null);
   const close = useCallback(() => setOpenIndex(null), []);
-  useEffect(() => {/* ... */}, [openIndex]);
+  useEffect(() => {
+    /* ... */
+  }, [openIndex]);
 
   // ✓ Guard belongs here — after hooks, before render
   if (!Array.isArray(images) || images.length === 0) return null;
@@ -136,19 +139,77 @@ route file.
 
 ---
 
+## Single-statement `if` / `else` bodies
+
+When an `if` or `else` clause has no curly braces, the body **must** be on
+its own line, indented one level deeper. Same applies to `else if` chains.
+
+```ts
+// ✗ inline body — body hides on the right
+if (!company) return null;
+if (next) nextParams.set('category', next);
+else nextParams.delete('category');
+
+// ✓ body on a fresh line
+if (!company) return null;
+
+if (next) nextParams.set('category', next);
+else nextParams.delete('category');
+```
+
+This applies uniformly to every single-statement body: `return`, `throw`,
+`continue`, `break`, plain expressions like `console.log(…)` or
+`callback()`. If the body is genuinely multi-statement, use braces instead.
+
+Why: scanning a column of `if (cond)` lines makes the conditions readable;
+inline bodies obscure them. The cost (one extra line each) is paid back
+the first time someone scans the control flow.
+
+## Parameter and variable naming
+
+Every parameter, callback variable, and loop variable carries a **meaningful
+name** — no single-character identifiers. The only exceptions are `_` for an
+intentionally unused parameter (e.g. `(_, index) => …`) and TypeScript
+generic type parameters (`T`, `U`, `V`).
+
+```tsx
+// ✗ unreadable — what is p? what is i?
+projects.map((p, i) => <ProjectCard key={p._id} project={p} />);
+
+// ✓ self-explanatory
+projects.map((project, index) => <ProjectCard key={project._id} project={project} />);
+```
+
+Conventional names by situation:
+
+| Situation                                   | Use                                                                                                                                                    |
+| ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Array `.map` / `.filter` / `.find` callback | the singular of the array (`projects → project`, `categories → category`, `team → member`, `socials → social`, `services → service`, `images → image`) |
+| Array index                                 | `index`                                                                                                                                                |
+| Sort comparator                             | `(first, second)`                                                                                                                                      |
+| Sanity validation rule                      | `(rule) => rule.required()`                                                                                                                            |
+| React event handler                         | `(event) => event.preventDefault()`                                                                                                                    |
+| useState setter callback                    | name it after the state (`setOpen((isOpen) => !isOpen)`)                                                                                               |
+| Loop variable in `for…of`                   | singular form of the iterable                                                                                                                          |
+| `Array.from` unused first arg               | `(_, index) => …`                                                                                                                                      |
+
+For collision-avoidance (e.g. a `.filter` callback inside a function scope
+that already has a `project` variable), suffix or pick a related noun:
+`candidate`, `current`, `other`, `incoming`. Don't fall back to single letters.
+
 ## File and naming conventions
 
-| Kind | Pattern | Example |
-| --- | --- | --- |
-| Source files | kebab-case | `project-card.tsx` |
-| Component exports | PascalCase (default export) | `export default function ProjectCard()` |
-| Hooks | `useFoo` exported from `use-foo.ts` | `useProjects` |
-| Types / interfaces | PascalCase | `interface ProjectCategory` |
-| GROQ constants | UPPER_SNAKE | `PROJECT_DETAIL_QUERY` |
-| CSS custom classes | lowercase | `.container-page`, `.image-hover` |
-| Env vars | SCREAMING_SNAKE; public ones prefixed `VITE_` | `VITE_SANITY_PROJECT_ID` |
-| Docs filenames | UPPER-CASE (matches root `README.md`/`LICENSE.md`) | `STANDARDS.md` |
-| Branches | `feature/<short-name>`, `fix/<short-name>` | `feature/about-team-grid` |
+| Kind               | Pattern                                            | Example                                 |
+| ------------------ | -------------------------------------------------- | --------------------------------------- |
+| Source files       | kebab-case                                         | `project-card.tsx`                      |
+| Component exports  | PascalCase (default export)                        | `export default function ProjectCard()` |
+| Hooks              | `useFoo` exported from `use-foo.ts`                | `useProjects`                           |
+| Types / interfaces | PascalCase                                         | `interface ProjectCategory`             |
+| GROQ constants     | UPPER_SNAKE                                        | `PROJECT_DETAIL_QUERY`                  |
+| CSS custom classes | lowercase                                          | `.container-page`, `.image-hover`       |
+| Env vars           | SCREAMING*SNAKE; public ones prefixed `VITE*`      | `VITE_SANITY_PROJECT_ID`                |
+| Docs filenames     | UPPER-CASE (matches root `README.md`/`LICENSE.md`) | `STANDARDS.md`                          |
+| Branches           | `feature/<short-name>`, `fix/<short-name>`         | `feature/about-team-grid`               |
 
 See [PROJECT-STRUCTURE.md](PROJECT-STRUCTURE.md) for the full "where does
 this go?" rules.
@@ -157,13 +218,13 @@ this go?" rules.
 
 ## Performance budget
 
-| Metric | Target |
-| --- | --- |
-| Initial JS (gzipped) | **< 180 KB** |
-| LCP (mobile) | < 2.5 s |
-| Largest hero image | < 250 KB at 1600w |
-| Lighthouse Performance | ≥ 90 |
-| Lighthouse Accessibility | ≥ 95 |
+| Metric                   | Target            |
+| ------------------------ | ----------------- |
+| Initial JS (gzipped)     | **< 180 KB**      |
+| LCP (mobile)             | < 2.5 s           |
+| Largest hero image       | < 250 KB at 1600w |
+| Lighthouse Performance   | ≥ 90              |
+| Lighthouse Accessibility | ≥ 95              |
 
 A PR that crosses the JS budget needs a justification or a code-split plan.
 Image weight is enforced by Sanity CDN params at request time, not by
@@ -202,20 +263,20 @@ refactor(scope): ...
 docs(scope): ...
 ```
 
-Body wraps at ~72 chars and explains the *why* (the diff already shows
-*what*). Include a `Co-Authored-By:` trailer for AI-assisted commits.
+Body wraps at ~72 chars and explains the _why_ (the diff already shows
+_what_). Include a `Co-Authored-By:` trailer for AI-assisted commits.
 
 Common scopes: `web`, `studio`, `components`, `docs`, `infra`,
 `log-config`, `studio.scripts`.
 
 ### Branch model
 
-| Branch | Purpose | Protected |
-| --- | --- | --- |
-| `main` | Production | yes |
-| `develop` | Staging | yes |
-| `feature/<name>` | New work | no |
-| `fix/<name>` | Bug fixes | no |
+| Branch           | Purpose    | Protected |
+| ---------------- | ---------- | --------- |
+| `main`           | Production | yes       |
+| `develop`        | Staging    | yes       |
+| `feature/<name>` | New work   | no        |
+| `fix/<name>`     | Bug fixes  | no        |
 
 Squash-merge into `develop`; regular merge `develop → main`. Linear history.
 
@@ -246,15 +307,15 @@ don't silently rewrite past entries except for factual fixes.
 
 ## Validation patterns at a glance
 
-| Situation | Pattern |
-| --- | --- |
-| Required prop object | `if (!obj) return null` after hooks |
-| Required fields on a prop object | `if (!obj || !obj.field) return null` |
-| Required array (must be non-empty) | `if (!Array.isArray(arr) \|\| arr.length === 0) return null` |
-| Optional array (continue with default) | `const safe = Array.isArray(arr) ? arr : []` |
-| Loading state at route | `if (isLoading) return <Skeleton/>; if (!data) return null;` |
-| String parse / regex | Guard input type before `.match()` / `.split()` |
-| Form input | zod schema validated by react-hook-form |
+| Situation                              | Pattern                                                      |
+| -------------------------------------- | ------------------------------------------------------------ | --- | ------------------------ |
+| Required prop object                   | `if (!obj) return null` after hooks                          |
+| Required fields on a prop object       | `if (!obj                                                    |     | !obj.field) return null` |
+| Required array (must be non-empty)     | `if (!Array.isArray(arr) \|\| arr.length === 0) return null` |
+| Optional array (continue with default) | `const safe = Array.isArray(arr) ? arr : []`                 |
+| Loading state at route                 | `if (isLoading) return <Skeleton/>; if (!data) return null;` |
+| String parse / regex                   | Guard input type before `.match()` / `.split()`              |
+| Form input                             | zod schema validated by react-hook-form                      |
 
 ---
 

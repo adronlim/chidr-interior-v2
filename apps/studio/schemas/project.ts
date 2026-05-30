@@ -10,25 +10,28 @@ export default defineType({
     defineField({
       name: 'title',
       type: 'string',
-      validation: (r) => r.required(),
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'slug',
       type: 'slug',
       options: { source: 'title', maxLength: 96 },
-      validation: (r) => r.required(),
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'category',
       type: 'reference',
       to: [{ type: 'projectCategory' }],
-      validation: (r) => r.required(),
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'year',
       type: 'number',
-      validation: (r) =>
-        r.integer().min(1990).max(new Date().getFullYear() + 1),
+      validation: (rule) =>
+        rule
+          .integer()
+          .min(1990)
+          .max(new Date().getFullYear() + 1),
     }),
     defineField({ name: 'location', type: 'string' }),
     defineField({
@@ -46,7 +49,7 @@ export default defineType({
       name: 'coverImage',
       type: 'image',
       options: { hotspot: true },
-      validation: (r) => r.required(),
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'gallery',
@@ -65,8 +68,8 @@ export default defineType({
       title: 'YouTube video URL (optional)',
       description:
         'Walkthrough video. Paste a YouTube link — youtube.com/watch?v=… or youtu.be/… both work.',
-      validation: (r) =>
-        r.uri({ scheme: ['http', 'https'] }).custom((value) => {
+      validation: (rule) =>
+        rule.uri({ scheme: ['http', 'https'] }).custom((value) => {
           if (!value) return true;
           const ok =
             /^https?:\/\/(www\.)?(youtube\.com\/(watch\?v=|embed\/|v\/)|youtu\.be\/)[\w-]+/.test(

@@ -75,15 +75,15 @@ async function preflight() {
     fail(`Sanity returned HTTP ${res.status} for project list.`);
   }
   const projects = (await res.json()) as Array<{ id: string; displayName?: string }>;
-  const target = projects.find((p) => p.id === projectId);
+  const target = projects.find((project) => project.id === projectId);
   if (!target) {
     console.error('\x1b[31m✗\x1b[0m Token has no access to project ' + `"${projectId}".`);
     console.error('  Projects this token CAN access:');
     if (projects.length === 0) {
       console.error('    (none — token is from a Sanity account with no project memberships)');
     } else {
-      for (const p of projects) {
-        console.error(`    • ${p.displayName ?? p.id} (${p.id})`);
+      for (const project of projects) {
+        console.error(`    • ${project.displayName ?? project.id} (${project.id})`);
       }
     }
     console.error('');
@@ -102,21 +102,108 @@ async function preflight() {
 // ─── content to seed ─────────────────────────────────────────────────────────
 
 const categories = [
-  { _id: 'category-residential', _type: 'projectCategory', title: 'Residential', slug: { _type: 'slug', current: 'residential' } },
-  { _id: 'category-commercial', _type: 'projectCategory', title: 'Commercial', slug: { _type: 'slug', current: 'commercial' } },
-  { _id: 'category-office', _type: 'projectCategory', title: 'Office', slug: { _type: 'slug', current: 'office' } },
+  {
+    _id: 'category-residential',
+    _type: 'projectCategory',
+    title: 'Residential',
+    slug: { _type: 'slug', current: 'residential' },
+  },
+  {
+    _id: 'category-commercial',
+    _type: 'projectCategory',
+    title: 'Commercial',
+    slug: { _type: 'slug', current: 'commercial' },
+  },
+  {
+    _id: 'category-office',
+    _type: 'projectCategory',
+    title: 'Office',
+    slug: { _type: 'slug', current: 'office' },
+  },
 ];
 
 const projects = [
-  { title: 'Desa Pinang', slug: 'desa-pinang', cat: 'residential', year: 2023, location: 'Penang', order: 1, featured: true },
-  { title: 'QuayWest Residence', slug: 'quaywest-residence', cat: 'residential', year: 2022, location: 'Bayan Lepas, Penang', order: 2, featured: true },
-  { title: 'Queen Residence', slug: 'queen-residence', cat: 'residential', year: 2022, location: 'George Town, Penang', order: 3, featured: false },
-  { title: 'The Marin', slug: 'the-marin', cat: 'residential', year: 2023, location: 'Tanjung Tokong, Penang', order: 4, featured: true },
-  { title: 'The Zen', slug: 'the-zen', cat: 'residential', year: 2021, location: 'Sungai Ara, Penang', order: 5, featured: false },
-  { title: 'Waterside Residence', slug: 'waterside-residence', cat: 'residential', year: 2022, location: 'Gelugor, Penang', order: 6, featured: false },
-  { title: 'Beacon Executive Suites', slug: 'beacon-executive-suites', cat: 'commercial', year: 2023, location: 'George Town, Penang', order: 7, featured: true },
-  { title: 'Imperial Grande', slug: 'imperial-grande', cat: 'residential', year: 2024, location: 'Pulau Tikus, Penang', order: 8, featured: true },
-  { title: 'Jelutong Office', slug: 'jelutong-office', cat: 'office', year: 2023, location: 'Jelutong, Penang', order: 9, featured: false },
+  {
+    title: 'Desa Pinang',
+    slug: 'desa-pinang',
+    category: 'residential',
+    year: 2023,
+    location: 'Penang',
+    order: 1,
+    featured: true,
+  },
+  {
+    title: 'QuayWest Residence',
+    slug: 'quaywest-residence',
+    category: 'residential',
+    year: 2022,
+    location: 'Bayan Lepas, Penang',
+    order: 2,
+    featured: true,
+  },
+  {
+    title: 'Queen Residence',
+    slug: 'queen-residence',
+    category: 'residential',
+    year: 2022,
+    location: 'George Town, Penang',
+    order: 3,
+    featured: false,
+  },
+  {
+    title: 'The Marin',
+    slug: 'the-marin',
+    category: 'residential',
+    year: 2023,
+    location: 'Tanjung Tokong, Penang',
+    order: 4,
+    featured: true,
+  },
+  {
+    title: 'The Zen',
+    slug: 'the-zen',
+    category: 'residential',
+    year: 2021,
+    location: 'Sungai Ara, Penang',
+    order: 5,
+    featured: false,
+  },
+  {
+    title: 'Waterside Residence',
+    slug: 'waterside-residence',
+    category: 'residential',
+    year: 2022,
+    location: 'Gelugor, Penang',
+    order: 6,
+    featured: false,
+  },
+  {
+    title: 'Beacon Executive Suites',
+    slug: 'beacon-executive-suites',
+    category: 'commercial',
+    year: 2023,
+    location: 'George Town, Penang',
+    order: 7,
+    featured: true,
+  },
+  {
+    title: 'Imperial Grande',
+    slug: 'imperial-grande',
+    category: 'residential',
+    year: 2024,
+    location: 'Pulau Tikus, Penang',
+    order: 8,
+    featured: true,
+  },
+  {
+    title: 'Jelutong Office',
+    slug: 'jelutong-office',
+    category: 'office',
+    year: 2023,
+    location: 'Jelutong, Penang',
+    order: 9,
+    featured: false,
+  },
 ];
 
 const company = {
@@ -132,9 +219,24 @@ const company = {
     { _key: 's2', platform: 'facebook', url: 'https://facebook.com/chidr' },
   ],
   services: [
-    { _key: 'sv1', title: 'Interior Design', description: 'Full design service from brief to handover, for homes that age well.', icon: 'pencil-ruler' },
-    { _key: 'sv2', title: 'Renovation', description: 'Build-out, joinery and finishes managed end-to-end.', icon: 'hammer' },
-    { _key: 'sv3', title: 'Space Planning', description: 'Floor-plan reconfiguration for apartments and small commercial spaces.', icon: 'layout-grid' },
+    {
+      _key: 'sv1',
+      title: 'Interior Design',
+      description: 'Full design service from brief to handover, for homes that age well.',
+      icon: 'pencil-ruler',
+    },
+    {
+      _key: 'sv2',
+      title: 'Renovation',
+      description: 'Build-out, joinery and finishes managed end-to-end.',
+      icon: 'hammer',
+    },
+    {
+      _key: 'sv3',
+      title: 'Space Planning',
+      description: 'Floor-plan reconfiguration for apartments and small commercial spaces.',
+      icon: 'layout-grid',
+    },
   ],
 };
 
@@ -148,23 +250,23 @@ const hero = {
   ctaHref: '/projects',
 };
 
-function projectDoc(p: (typeof projects)[number]) {
+function projectDoc(project: (typeof projects)[number]) {
   return {
-    _id: `project-${p.slug}`,
+    _id: `project-${project.slug}`,
     _type: 'project',
-    title: p.title,
-    slug: { _type: 'slug', current: p.slug },
-    category: { _type: 'reference', _ref: `category-${p.cat}` },
-    year: p.year,
-    location: p.location,
-    order: p.order,
-    featured: p.featured,
+    title: project.title,
+    slug: { _type: 'slug', current: project.slug },
+    category: { _type: 'reference', _ref: `category-${project.category}` },
+    year: project.year,
+    location: project.location,
+    order: project.order,
+    featured: project.featured,
   };
 }
 
 // ─── operations ──────────────────────────────────────────────────────────────
 
-async function upsert(doc: { _id: string; _type: string; [k: string]: unknown }, label: string) {
+async function upsert(doc: { _id: string; _type: string; [key: string]: unknown }, label: string) {
   if (dryRun) {
     if (verbose) console.log(`  · would upsert ${doc._type}/${doc._id} — ${label}`);
     return;
@@ -183,14 +285,14 @@ async function run() {
   );
 
   console.log('Categories');
-  for (const c of categories) await upsert(c, c.title);
+  for (const category of categories) await upsert(category, category.title);
 
   console.log('Singletons');
   await upsert(company, 'company info');
   await upsert(hero, 'homepage hero');
 
   console.log('Projects');
-  for (const p of projects) await upsert(projectDoc(p), p.title);
+  for (const project of projects) await upsert(projectDoc(project), project.title);
 
   if (dryRun) {
     console.log(`\n\x1b[33m⚠\x1b[0m Dry run complete — nothing was written.`);

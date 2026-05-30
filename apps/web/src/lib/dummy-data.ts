@@ -10,17 +10,17 @@ import type {
   Testimonial,
 } from './types';
 
-const placeholder = (w: number, h: number, text: string, dark = false) => {
-  const bg = dark ? '1A1A1A' : 'F5F1EA';
-  const fg = dark ? 'F5F1EA' : '1A1A1A';
-  const t = encodeURIComponent(text);
-  return `https://placehold.co/${w}x${h}/${bg}/${fg}?text=${t}&font=playfair`;
+const placeholder = (width: number, height: number, text: string, dark = false) => {
+  const background = dark ? '1A1A1A' : 'F5F1EA';
+  const foreground = dark ? 'F5F1EA' : '1A1A1A';
+  const encoded = encodeURIComponent(text);
+  return `https://placehold.co/${width}x${height}/${background}/${foreground}?text=${encoded}&font=playfair`;
 };
 
 const gallery = (title: string, count = 5) =>
-  Array.from({ length: count }, (_, i) => ({
-    url: placeholder(1600, 1100, `${title} · ${i + 1}`),
-    alt: `${title} — image ${i + 1}`,
+  Array.from({ length: count }, (_, index) => ({
+    url: placeholder(1600, 1100, `${title} · ${index + 1}`),
+    alt: `${title} — image ${index + 1}`,
   }));
 
 export const categories: ProjectCategory[] = [

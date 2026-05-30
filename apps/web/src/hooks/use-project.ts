@@ -13,14 +13,16 @@ export function useProject(slug: string | undefined) {
     queryKey: ['project', slug],
     enabled: Boolean(slug),
     queryFn: async (): Promise<ProjectDetail | null> => {
-      if (!slug) return null;
+      if (!slug) 
+        return null;
       if (sanityEnabled && sanity) {
         return sanity.fetch(PROJECT_DETAIL_QUERY, { slug });
       }
-      const project = dummy.find((p) => p.slug === slug);
-      if (!project) return null;
+      const project = dummy.find((candidate) => candidate.slug === slug);
+      if (!project) 
+        return null;
       const related = dummy
-        .filter((p) => p._id !== project._id && p.category.slug === project.category.slug)
+        .filter((candidate) => candidate._id !== project._id && candidate.category.slug === project.category.slug)
         .slice(0, 3);
       return { ...project, related };
     },

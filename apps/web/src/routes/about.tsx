@@ -61,19 +61,19 @@ export default function About() {
       <section className="container-page py-20 lg:py-section">
         <SectionTitle eyebrow="People">The team.</SectionTitle>
         <div className="mt-12 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
-          {team.map((m) => (
-            <div key={m?._id}>
+          {team.map((member) => (
+            <div key={member?._id}>
               <div className="aspect-[4/5] bg-line overflow-hidden">
                 <img
-                  src={m?.photo?.url}
-                  alt={m?.photo?.alt ?? m?.name}
+                  src={member?.photo?.url}
+                  alt={member?.photo?.alt ?? member?.name}
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="mt-4">
-                <div className="font-display text-2xl tracking-tighter">{m?.name}</div>
-                <div className="eyebrow mt-1">{m?.role}</div>
-                <p className="mt-3 text-sm text-ash leading-relaxed">{m?.bio}</p>
+                <div className="font-display text-2xl tracking-tighter">{member?.name}</div>
+                <div className="eyebrow mt-1">{member?.role}</div>
+                <p className="mt-3 text-sm text-ash leading-relaxed">{member?.bio}</p>
               </div>
             </div>
           ))}

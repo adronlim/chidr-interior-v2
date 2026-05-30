@@ -48,7 +48,7 @@ export default function Nav() {
           type="button"
           className="lg:hidden p-2 -mr-2"
           aria-label={open ? 'Close menu' : 'Open menu'}
-          onClick={() => setOpen((o) => !o)}
+          onClick={() => setOpen((isOpen) => !isOpen)}
         >
           {open ? <X size={20} /> : <Menu size={20} />}
         </button>

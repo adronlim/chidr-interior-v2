@@ -15,9 +15,12 @@ export default function ProjectGrid({ projects, variant = 'grid' }: Props) {
   if (variant === 'masonry') {
     return (
       <div className="masonry">
-        {projects.map((p, i) => (
-          <div key={p._id}>
-            <ProjectCard project={p} aspect={i % 3 === 0 ? 'portrait' : 'landscape'} />
+        {projects?.map((project, index) => (
+          <div key={project._id}>
+            <ProjectCard
+              project={project}
+              aspect={index % 3 === 0 ? 'portrait' : 'landscape'}
+            />
           </div>
         ))}
       </div>
@@ -26,8 +29,8 @@ export default function ProjectGrid({ projects, variant = 'grid' }: Props) {
 
   return (
     <div className="grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
-      {projects.map((p) => (
-        <ProjectCard key={p._id} project={p} />
+      {projects?.map((project) => (
+        <ProjectCard key={project._id} project={project} />
       ))}
     </div>
   );

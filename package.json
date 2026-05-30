@@ -16,6 +16,8 @@
     "studio:seed": "yarn workspace studio seed",
     "docs:pdf": "node scripts/build-docs-pdf.mjs",
     "log:config": "node scripts/log-config-changes.mjs",
+    "format": "prettier --write --cache .",
+    "format:check": "prettier --check --cache .",
     "postinstall": "git config core.hooksPath .githooks 2>/dev/null || true"
   },
   "engines": {
@@ -23,6 +25,8 @@
   },
   "packageManager": "yarn@1.22.22",
   "devDependencies": {
-    "marked": "^18.0.4"
+    "marked": "^18.0.4",
+    "prettier": "^3.8.3",
+    "prettier-plugin-tailwindcss": "^0.8.0"
   }
 }

@@ -10,8 +10,8 @@ if ! command -v node >/dev/null 2>&1; then
     "$HOME/.nvm/versions/node/$(cat .nvmrc 2>/dev/null || echo v20)*/bin/node" \
     "/usr/local/bin/node" \
     "/opt/homebrew/bin/node"; do
-    for n in $candidate; do
-      [ -x "$n" ] && PATH="$(dirname "$n"):$PATH" && break 2
+    for nodeBinary in $candidate; do
+      [ -x "$nodeBinary" ] && PATH="$(dirname "$nodeBinary"):$PATH" && break 2
     done
   done
 fi

@@ -12,7 +12,7 @@ export default function FilterChips({ categories, active, onChange }: Props) {
   const safeCategories = Array.isArray(categories) ? categories : [];
   const items: { slug: CategorySlug | null; label: string }[] = [
     { slug: null, label: 'All' },
-    ...safeCategories.map((c) => ({ slug: c.slug, label: c.title })),
+    ...safeCategories.map((category) => ({ slug: category.slug, label: category.title })),
   ];
 
   return (

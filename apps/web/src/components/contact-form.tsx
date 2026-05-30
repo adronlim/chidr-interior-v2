@@ -68,9 +68,9 @@ export default function ContactForm() {
       <Field label="Project interest" error={errors.projectInterest?.message}>
         <select {...register('projectInterest')} className={inputCls}>
           <option value="">Select one…</option>
-          {categories?.map((c) => (
-            <option key={c._id} value={c.slug}>
-              {c.title}
+          {categories?.map((category) => (
+            <option key={category._id} value={category.slug}>
+              {category.title}
             </option>
           ))}
         </select>
@@ -106,9 +106,9 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="eyebrow block mb-1">{label}</span>
+      <span className="eyebrow mb-1 block">{label}</span>
       {children}
-      {error && <span className="block mt-1 text-xs text-brass">{error}</span>}
+      {error && <span className="mt-1 block text-xs text-brass">{error}</span>}
     </label>
   );
 }

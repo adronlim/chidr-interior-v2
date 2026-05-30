@@ -40,7 +40,7 @@ export default function Contact() {
               </Block>
               <div className="aspect-[4/3] bg-line overflow-hidden">
                 <iframe
-                  src={company.mapEmbedUrl}
+                  src={company?.mapEmbedUrl}
                   title="Studio location"
                   loading="lazy"
                   className="w-full h-full border-0"

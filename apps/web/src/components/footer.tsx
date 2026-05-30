@@ -14,8 +14,8 @@ export default function Footer() {
   if (!company) return null;
 
   return (
-    <footer className="bg-ink text-bone mt-24">
-      <div className="container-page py-20 grid gap-12 lg:grid-cols-4">
+    <footer className="mt-24 bg-ink text-bone">
+      <div className="container-page grid gap-12 py-20 lg:grid-cols-4">
         <div className="lg:col-span-2">
           <div className="font-display text-3xl tracking-tighter">
             {company?.logoWordmark?.primary}
@@ -27,7 +27,7 @@ export default function Footer() {
         </div>
 
         <div>
-          <h4 className="eyebrow text-ash mb-4">Visit</h4>
+          <h4 className="eyebrow mb-4 text-ash">Visit</h4>
           <p className="whitespace-pre-line text-sm leading-relaxed">{company?.address}</p>
           <p className="mt-4 text-sm">
             <a href={`tel:${company?.phone.replace(/\s/g, '')}`}>{company?.phone}</a>
@@ -38,18 +38,18 @@ export default function Footer() {
         </div>
 
         <div>
-          <h4 className="eyebrow text-ash mb-4">Follow</h4>
+          <h4 className="eyebrow mb-4 text-ash">Follow</h4>
           <ul className="flex gap-4">
-            {company?.socials.map((s) => {
-              const Icon = ICON[s?.platform];
+            {company?.socials.map((social) => {
+              const Icon = ICON[social?.platform];
               return (
-                <li key={s?.platform}>
+                <li key={social?.platform}>
                   <a
-                    href={s?.url}
+                    href={social?.url}
                     target="_blank"
                     rel="noreferrer"
-                    aria-label={s?.platform}
-                    className="inline-flex items-center justify-center w-10 h-10 border border-ash/30 hover:border-bone transition-colors"
+                    aria-label={social?.platform}
+                    className="inline-flex h-10 w-10 items-center justify-center border border-ash/30 transition-colors hover:border-bone"
                   >
                     <Icon size={16} />
                   </a>
@@ -58,18 +58,26 @@ export default function Footer() {
             })}
           </ul>
 
-          <h4 className="eyebrow text-ash mb-4 mt-8">Explore</h4>
+          <h4 className="eyebrow mb-4 mt-8 text-ash">Explore</h4>
           <ul className="space-y-2 text-sm">
-            <li><Link to="/projects">Projects</Link></li>
-            <li><Link to="/about">About</Link></li>
-            <li><Link to="/contact">Contact</Link></li>
+            <li>
+              <Link to="/projects">Projects</Link>
+            </li>
+            <li>
+              <Link to="/about">About</Link>
+            </li>
+            <li>
+              <Link to="/contact">Contact</Link>
+            </li>
           </ul>
         </div>
       </div>
 
       <div className="border-t border-ash/20">
-        <div className="container-page py-6 text-xs text-ash flex flex-wrap items-center justify-between gap-3">
-          <span>© {new Date().getFullYear()} {company?.name}. All rights reserved.</span>
+        <div className="container-page flex flex-wrap items-center justify-between gap-3 py-6 text-xs text-ash">
+          <span>
+            © {new Date().getFullYear()} {company?.name}. All rights reserved.
+          </span>
           <span>Made in Penang.</span>
         </div>
       </div>

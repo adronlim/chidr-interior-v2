@@ -12,7 +12,7 @@ export default function Home() {
   const { data: projects = [] } = useProjects();
   const { data: company } = useCompany();
 
-  const featured = projects.filter((p) => p.featured).slice(0, 6);
+  const featured = projects.filter((project) => project?.featured)?.slice(0, 6);
 
   return (
     <>
@@ -54,8 +54,8 @@ export default function Home() {
           </Link>
         </div>
         <div className="grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
-          {featured.map((p) => (
-            <ProjectCard key={p._id} project={p} />
+          {featured?.map((project) => (
+            <ProjectCard key={project?._id} project={project} />
           ))}
         </div>
       </section>
@@ -66,10 +66,10 @@ export default function Home() {
       <section className="container-page py-20 lg:py-section">
         <SectionTitle eyebrow="What we do">Three services, done with care.</SectionTitle>
         <div className="mt-12 grid gap-12 lg:grid-cols-3">
-          {company?.services.map((s) => (
-            <div key={s.title}>
-              <div className="font-display text-3xl tracking-tighter mb-3">{s.title}</div>
-              <p className="text-ash leading-relaxed">{s.description}</p>
+          {company?.services?.map((service) => (
+            <div key={service?.title}>
+              <div className="font-display text-3xl tracking-tighter mb-3">{service.title}</div>
+              <p className="text-ash leading-relaxed">{service?.description}</p>
             </div>
           ))}
         </div>
@@ -78,13 +78,13 @@ export default function Home() {
       <div className="hairline" />
 
       {/* TESTIMONIAL */}
-      {testimonials[0] && (
+      {testimonials?.[0] && (
         <section className="container-page py-20 lg:py-section text-center max-w-3xl mx-auto">
           <p className="font-display text-3xl lg:text-4xl tracking-tighter leading-snug">
-            &ldquo;{testimonials[0].quote}&rdquo;
+            &ldquo;{testimonials?.[0]?.quote}&rdquo;
           </p>
           <p className="eyebrow mt-8">
-            — {testimonials[0].author}, {testimonials[0].role}
+            — {testimonials?.[0]?.author}, {testimonials?.[0]?.role}
           </p>
         </section>
       )}

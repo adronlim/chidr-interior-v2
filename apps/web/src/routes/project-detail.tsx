@@ -57,8 +57,8 @@ export default function ProjectDetail() {
               {project?.title}
             </h1>
             <div className="mt-10 space-y-5 max-w-prose text-ink/85 leading-relaxed">
-              {project?.description?.map((p, i) => (
-                <p key={i}>{p}</p>
+              {project?.description?.map((paragraph, index) => (
+                <p key={index}>{paragraph}</p>
               ))}
             </div>
           </div>
@@ -93,8 +93,8 @@ export default function ProjectDetail() {
         <section className="container-page py-20 lg:py-section">
           <SectionTitle eyebrow="You may also like">More work.</SectionTitle>
           <div className="mt-12 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
-            {project?.related?.map((r) => (
-              <ProjectCard key={r?._id} project={r} />
+            {project?.related?.map((relatedProject) => (
+              <ProjectCard key={relatedProject?._id} project={relatedProject} />
             ))}
           </div>
         </section>

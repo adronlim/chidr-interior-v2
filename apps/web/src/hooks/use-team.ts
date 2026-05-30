@@ -9,7 +9,7 @@ export function useTeam() {
     queryKey: ['team'],
     queryFn: async (): Promise<TeamMember[]> => {
       if (sanityEnabled && sanity) return sanity.fetch(TEAM_QUERY);
-      return [...dummy].sort((a, b) => a.order - b.order);
+      return [...dummy].sort((first, second) => first.order - second.order);
     },
     staleTime: 5 * 60_000,
   });

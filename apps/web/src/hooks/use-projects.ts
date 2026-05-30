@@ -11,8 +11,8 @@ export function useProjects(category?: CategorySlug) {
       if (sanityEnabled && sanity) {
         return sanity.fetch(PROJECTS_QUERY, { category: category ?? null });
       }
-      const sorted = [...dummy].sort((a, b) => a.order - b.order);
-      return category ? sorted.filter((p) => p.category.slug === category) : sorted;
+      const sorted = [...dummy].sort((first, second) => first.order - second.order);
+      return category ? sorted.filter((project) => project.category.slug === category) : sorted;
     },
     staleTime: 60_000,
   });

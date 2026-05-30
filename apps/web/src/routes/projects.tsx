@@ -9,8 +9,8 @@ import type { CategorySlug } from '@/lib/types';
 
 const VALID: CategorySlug[] = ['residential', 'commercial', 'office'];
 
-function parseCategory(v: string | null): CategorySlug | null {
-  return VALID.includes(v as CategorySlug) ? (v as CategorySlug) : null;
+function parseCategory(value: string | null): CategorySlug | null {
+  return VALID.includes(value as CategorySlug) ? (value as CategorySlug) : null;
 }
 
 export default function Projects() {
@@ -19,20 +19,19 @@ export default function Projects() {
 
   const { data: categories = [] } = useCategories();
   const { data: projects = [], isLoading } = useProjects(active ?? undefined);
-
   const onChange = (next: CategorySlug | null) => {
     setActive(next);
-    const p = new URLSearchParams(params);
-    if (next) p.set('category', next);
-    else p.delete('category');
-    setParams(p, { replace: true });
+    const nextParams = new URLSearchParams(params);
+    if (next) nextParams.set('category', next);
+    else nextParams.delete('category');
+    setParams(nextParams, { replace: true });
   };
 
   return (
     <section className="container-page py-16 lg:py-24">
       <SectionTitle eyebrow="Portfolio">Projects.</SectionTitle>
 
-      <div className="mt-10 lg:mt-12 mb-10">
+      <div className="mb-10 mt-10 lg:mt-12">
         <FilterChips categories={categories} active={active} onChange={onChange} />
       </div>
 

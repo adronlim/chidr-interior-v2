@@ -76,13 +76,16 @@ const sections = await Promise.all(
 
 const toc = sections
   .map(
-    (s, i) =>
-      `<li><a href="#sec-${i}">${escapeHtml(s.title)}</a><span class="file">${escapeHtml(s.file)}</span></li>`,
+    (section, index) =>
+      `<li><a href="#sec-${index}">${escapeHtml(section.title)}</a><span class="file">${escapeHtml(section.file)}</span></li>`,
   )
   .join('\n');
 
 const body = sections
-  .map((s, i) => `<section class="doc" id="sec-${i}">${s.html}</section>`)
+  .map(
+    (section, index) =>
+      `<section class="doc" id="sec-${index}">${section.html}</section>`,
+  )
   .join('\n');
 
 const html = `<!doctype html>
@@ -112,10 +115,10 @@ const htmlPath = join(outDir, 'docs.html');
 const pdfPath = join(outDir, 'chidr-interior-v2-docs.pdf');
 await writeFile(htmlPath, html, 'utf8');
 
-const chrome = CHROME_CANDIDATES.find((p) => {
+const chrome = CHROME_CANDIDATES.find((candidatePath) => {
   try {
     // statSync would be cleaner but we already imported promises; spawnSync 'test' is portable enough
-    return spawnSync('test', ['-x', p]).status === 0;
+    return spawnSync('test', ['-x', candidatePath]).status === 0;
   } catch {
     return false;
   }
@@ -147,8 +150,8 @@ if (result.status !== 0) {
 
 console.log(`PDF written: ${pdfPath}`);
 
-function escapeHtml(s) {
-  return s.replace(/[&<>"']/g, (c) => ({
+function escapeHtml(input) {
+  return input.replace(/[&<>"']/g, (char) => ({
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
-  }[c]));
+  }[char]));
 }

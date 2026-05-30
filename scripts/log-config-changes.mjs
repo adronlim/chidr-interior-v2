@@ -40,15 +40,12 @@ const BASENAME_PATTERNS = [
 ];
 
 // Patterns matched against full path
-const PATH_PATTERNS = [
-  /^\.github\/workflows\//,
-  /^\.githooks\//,
-];
+const PATH_PATTERNS = [/^\.github\/workflows\//, /^\.githooks\//];
 
 function isConfig(path) {
   return (
-    BASENAME_PATTERNS.some((p) => p.test(basename(path))) ||
-    PATH_PATTERNS.some((p) => p.test(path))
+    BASENAME_PATTERNS.some((pattern) => pattern.test(basename(path))) ||
+    PATH_PATTERNS.some((pattern) => pattern.test(path))
   );
 }
 
@@ -64,13 +61,13 @@ function stagedFiles() {
 // previous commit's message). Entries here are date + files only; cross-
 // reference git log by date if you need the message.
 
-function pad(n) {
-  return String(n).padStart(2, '0');
+function pad(value) {
+  return String(value).padStart(2, '0');
 }
 
 function timestamp() {
-  const d = new Date();
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  const now = new Date();
+  return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}`;
 }
 
 const HEADER = `# Configuration changelog
@@ -94,7 +91,7 @@ function ensureLog(path) {
 }
 
 function appendEntry(path, ts, files) {
-  const block = `\n### ${ts}\n${files?.map((f) => `- \`${f}\``).join('\n')}\n`;
+  const block = `\n### ${ts}\n${files?.map((file) => `- \`${file}\``).join('\n')}\n`;
   appendFileSync(path, block);
 }
 
@@ -109,7 +106,7 @@ const logPath = resolve(root, 'docs/CONFIG-LOG.md');
 
 if (!COMMIT_MODE) {
   console.log(`Would log ${files?.length} config file(s) to docs/CONFIG-LOG.md:`);
-  for (const f of files) console.log(`  - ${f}`);
+  for (const file of files) console.log(`  - ${file}`);
   console.log('\n(dry-run — pass --commit, or use the pre-commit hook, to write)');
   process.exit(0);
 }

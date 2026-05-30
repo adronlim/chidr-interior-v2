@@ -35,19 +35,20 @@ export default function VideoEmbed({ url, title = 'Project walkthrough' }: Props
         type="button"
         onClick={() => setPlaying(true)}
         aria-label={`Play ${title}`}
-        className="group relative block w-full aspect-video overflow-hidden bg-ink"
+        className="group relative block aspect-video w-full overflow-hidden bg-ink"
       >
         <img
           src={`https://i.ytimg.com/vi/${id}/maxresdefault.jpg`}
           alt={title}
           loading="lazy"
-          onError={(e) => {
-            (e.currentTarget as HTMLImageElement).src = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+          onError={(event) => {
+            (event.currentTarget as HTMLImageElement).src =
+              `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
           }}
-          className="image-hover w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity"
+          className="image-hover h-full w-full object-cover opacity-90 transition-opacity group-hover:opacity-100"
         />
         <span className="absolute inset-0 flex items-center justify-center">
-          <span className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-bone/95 text-ink shadow-lg group-hover:bg-bone transition">
+          <span className="inline-flex h-20 w-20 items-center justify-center rounded-full bg-bone/95 text-ink shadow-lg transition group-hover:bg-bone">
             <Play size={28} className="ml-1" fill="currentColor" />
           </span>
         </span>
@@ -56,14 +57,14 @@ export default function VideoEmbed({ url, title = 'Project walkthrough' }: Props
   }
 
   return (
-    <div className="w-full aspect-video bg-ink">
+    <div className="aspect-video w-full bg-ink">
       <iframe
         src={`https://www.youtube.com/embed/${id}?autoplay=1&rel=0`}
         title={title}
         loading="lazy"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
-        className="w-full h-full border-0"
+        className="h-full w-full border-0"
       />
     </div>
   );

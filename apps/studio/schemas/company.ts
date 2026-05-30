@@ -10,7 +10,7 @@ export default defineType({
     defineField({
       name: 'name',
       type: 'string',
-      validation: (r) => r.required(),
+      validation: (rule) => rule.required(),
       initialValue: 'CH iDesign & Renovation',
     }),
     defineField({
@@ -40,7 +40,7 @@ export default defineType({
     defineField({
       name: 'email',
       type: 'string',
-      validation: (r) => r.email(),
+      validation: (rule) => rule.email(),
     }),
     defineField({
       name: 'mapEmbedUrl',

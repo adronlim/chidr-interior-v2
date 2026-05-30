@@ -11,20 +11,23 @@ export default function Gallery({ images }: Props) {
 
   const close = useCallback(() => setOpenIndex(null), []);
   const next = useCallback(
-    () => setOpenIndex((i) => (i === null ? null : (i + 1) % images?.length)),
+    () => setOpenIndex((index) => (index === null ? null : (index + 1) % images?.length)),
     [images?.length],
   );
   const prev = useCallback(
-    () => setOpenIndex((i) => (i === null ? null : (i - 1 + images?.length) % images?.length)),
+    () =>
+      setOpenIndex((index) =>
+        index === null ? null : (index - 1 + images?.length) % images?.length,
+      ),
     [images?.length],
   );
 
   useEffect(() => {
     if (openIndex === null) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') close();
-      if (e.key === 'ArrowRight') next();
-      if (e.key === 'ArrowLeft') prev();
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') close();
+      if (event.key === 'ArrowRight') next();
+      if (event.key === 'ArrowLeft') prev();
     };
     document.body.style.overflow = 'hidden';
     window.addEventListener('keydown', onKey);
@@ -48,13 +51,13 @@ export default function Gallery({ images }: Props) {
             key={i}
             type="button"
             onClick={() => setOpenIndex(i)}
-            className="block aspect-[4/3] overflow-hidden bg-line group"
+            className="group block aspect-[4/3] overflow-hidden bg-line"
           >
             <img
               src={img?.url}
               alt={img?.alt ?? `Image ${i + 1}`}
               loading="lazy"
-              className="w-full h-full object-cover image-hover"
+              className="image-hover h-full w-full object-cover"
             />
           </button>
         ))}
@@ -62,12 +65,12 @@ export default function Gallery({ images }: Props) {
 
       {openIndex !== null && (
         <div
-          className="fixed inset-0 z-50 bg-ink/95 flex items-center justify-center p-6"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-ink/95 p-6"
           onClick={close}
         >
           <button
             type="button"
-            className="absolute top-6 right-6 text-bone p-2"
+            className="absolute right-6 top-6 p-2 text-bone"
             aria-label="Close"
             onClick={close}
           >
@@ -75,10 +78,10 @@ export default function Gallery({ images }: Props) {
           </button>
           <button
             type="button"
-            className="absolute left-6 text-bone p-2"
+            className="absolute left-6 p-2 text-bone"
             aria-label="Previous"
-            onClick={(e) => {
-              e.stopPropagation();
+            onClick={(event) => {
+              event.stopPropagation();
               prev();
             }}
           >
@@ -88,14 +91,14 @@ export default function Gallery({ images }: Props) {
             src={images?.[openIndex]?.url}
             alt={images?.[openIndex]?.alt ?? ''}
             className="max-h-full max-w-full object-contain"
-            onClick={(e) => e.stopPropagation()}
+            onClick={(event) => event.stopPropagation()}
           />
           <button
             type="button"
-            className="absolute right-6 text-bone p-2"
+            className="absolute right-6 p-2 text-bone"
             aria-label="Next"
-            onClick={(e) => {
-              e.stopPropagation();
+            onClick={(event) => {
+              event.stopPropagation();
               next();
             }}
           >
