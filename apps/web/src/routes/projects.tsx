@@ -4,7 +4,7 @@ import { useProjects } from '@/hooks/use-projects';
 import { useCategories } from '@/hooks/use-categories';
 import ProjectGrid from '@/components/project-grid';
 import FilterChips from '@/components/filter-chips';
-import SectionTitle from '@/components/section-title';
+import Reveal from '@/components/reveal';
 import type { CategorySlug } from '@/lib/types';
 
 const VALID: CategorySlug[] = ['residential', 'commercial', 'office'];
@@ -29,11 +29,23 @@ export default function Projects() {
 
   return (
     <section className="container-page py-16 lg:py-24">
-      <SectionTitle eyebrow="Portfolio">Projects.</SectionTitle>
+      <Reveal>
+        <div className="eyebrow mb-6 flex items-center gap-3">
+          <span className="h-px w-10 bg-brass" />
+          Portfolio
+        </div>
+        <h1 className="max-w-3xl font-display text-6xl leading-[0.95] tracking-tighter lg:text-8xl">
+          Selected projects.
+        </h1>
+        <p className="mt-8 max-w-md leading-relaxed text-ash">
+          Residential, commercial and office interiors across Penang. Filter by the kind of space
+          you have in mind.
+        </p>
+      </Reveal>
 
-      <div className="mb-10 mt-10 lg:mt-12">
+      <Reveal delay={120} className="mb-10 mt-12">
         <FilterChips categories={categories} active={active} onChange={onChange} />
-      </div>
+      </Reveal>
 
       {isLoading ? (
         <p className="text-ash">Loading projects…</p>

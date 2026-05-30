@@ -13,15 +13,31 @@ const LINKS = [
 export default function Nav() {
   const { data: company } = useCompany();
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
     setOpen(false);
   }, [location?.pathname]);
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   return (
-    <header className="sticky top-0 z-40 bg-bone/85 backdrop-blur border-b border-line">
-      <div className="container-page flex items-center justify-between h-16 lg:h-20">
+    <header
+      className={`sticky top-0 z-40 backdrop-blur transition-colors duration-300 ${
+        scrolled ? 'border-b border-line bg-bone/90 shadow-[0_1px_0_rgba(0,0,0,0.02)]' : 'bg-bone/70'
+      }`}
+    >
+      <div
+        className={`container-page flex items-center justify-between transition-all duration-300 ${
+          scrolled ? 'h-14 lg:h-16' : 'h-16 lg:h-20'
+        }`}
+      >
         <Link to="/" className="font-display text-xl lg:text-2xl tracking-tighter leading-none">
           <span>{company?.logoWordmark?.primary ?? 'CH iDesign'}</span>
           {company?.logoWordmark?.secondary && (
