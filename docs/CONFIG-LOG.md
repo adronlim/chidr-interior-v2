@@ -18,3 +18,8 @@ Newest entries are appended at the bottom. To re-run manually for a preview:
 
 ### 2026-05-31 02:22
 - `.githooks/pre-commit`
+
+### 2026-06-01 05:56
+- `.gitignore`
+- `apps/studio/.gitignore`
+- `apps/web/.gitignore`
