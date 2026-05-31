@@ -11,14 +11,20 @@ export default defineType({
       name: 'name',
       type: 'string',
       validation: (rule) => rule.required(),
+      placeholder: 'Chai H.',
     }),
-    defineField({ name: 'role', type: 'string' }),
+    defineField({ name: 'role', type: 'string', placeholder: 'Principal Designer' }),
     defineField({
       name: 'photo',
       type: 'image',
       options: { hotspot: true },
     }),
-    defineField({ name: 'bio', type: 'text', rows: 4 }),
+    defineField({
+      name: 'bio',
+      type: 'text',
+      rows: 4,
+      placeholder: 'Fifteen years of residential and small commercial work across Penang.',
+    }),
     defineField({
       name: 'order',
       type: 'number',

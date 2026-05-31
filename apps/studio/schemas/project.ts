@@ -12,6 +12,7 @@ export default defineType({
       name: 'title',
       type: 'string',
       validation: (rule) => rule.required(),
+      placeholder: 'Marina Bay Penthouse',
     }),
     defineField({
       name: 'slug',
@@ -33,12 +34,18 @@ export default defineType({
           .integer()
           .min(1990)
           .max(new Date().getFullYear() + 1),
+      placeholder: '2024',
     }),
-    defineField({ name: 'location', type: 'string' }),
+    defineField({
+      name: 'location',
+      type: 'string',
+      placeholder: 'George Town, Penang',
+    }),
     defineField({
       name: 'areaSqft',
       type: 'number',
       title: 'Area (sqft)',
+      placeholder: '1200',
     }),
     defineField({
       name: 'featured',
@@ -82,6 +89,7 @@ export default defineType({
       title: 'YouTube video URL (optional)',
       description:
         'Walkthrough video. Paste a YouTube link — youtube.com/watch?v=… or youtu.be/… both work.',
+      placeholder: 'https://youtu.be/dQw4w9WgXcQ',
       validation: (rule) =>
         rule.uri({ scheme: ['http', 'https'] }).custom((value) => {
           if (!value) return true;

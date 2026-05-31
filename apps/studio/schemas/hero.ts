@@ -7,8 +7,17 @@ export default defineType({
   title: 'Homepage hero',
   icon: StarIcon,
   fields: [
-    defineField({ name: 'heading', type: 'string' }),
-    defineField({ name: 'subheading', type: 'text', rows: 2 }),
+    defineField({
+      name: 'heading',
+      type: 'string',
+      description: 'Spaces that quietly endure.',
+    }),
+    defineField({
+      name: 'subheading',
+      type: 'text',
+      rows: 2,
+      placeholder: 'Residential, commercial and office interiors based in Penang.',
+    }),
     defineField({
       name: 'image',
       type: 'image',

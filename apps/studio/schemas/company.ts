@@ -17,6 +17,7 @@ export default defineType({
       name: 'tagline',
       type: 'string',
       description: 'Used on the homepage hero subtitle',
+      placeholder: 'Spaces that quietly endure.',
     }),
     defineField({
       name: 'logo',
@@ -32,20 +33,24 @@ export default defineType({
       name: 'address',
       type: 'text',
       rows: 3,
+      placeholder: 'Lot 00, Jalan Macalister, 10400 George Town, Penang',
     }),
     defineField({
       name: 'phone',
       type: 'string',
+      placeholder: '+60 4-000 0000',
     }),
     defineField({
       name: 'email',
       type: 'string',
       validation: (rule) => rule.email(),
+      placeholder: 'hello@chidr.com.my',
     }),
     defineField({
       name: 'mapEmbedUrl',
       type: 'url',
       description: 'Google Maps embed URL for the Contact page',
+      placeholder: 'https://www.google.com/maps/embed?pb=...',
     }),
     defineField({
       name: 'socials',
@@ -78,8 +83,13 @@ export default defineType({
         {
           type: 'object',
           fields: [
-            defineField({ name: 'title', type: 'string' }),
-            defineField({ name: 'description', type: 'text', rows: 2 }),
+            defineField({ name: 'title', type: 'string', placeholder: 'Interior Design' }),
+            defineField({
+              name: 'description',
+              type: 'text',
+              rows: 2,
+              placeholder: 'Full design service from brief to handover.',
+            }),
             defineField({
               name: 'icon',
               type: 'string',
