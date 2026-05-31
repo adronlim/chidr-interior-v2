@@ -62,6 +62,40 @@ Studio deploy is its own GHA workflow (see [GITHUB.md](GITHUB.md)).
 Public `VITE_*` vars are embedded in the JS bundle — anyone can read them.
 That's fine; they identify the dataset, not authorize access.
 
+### Local studio env files: which command reads which file
+
+`apps/studio/` uses two local env files (both gitignored), each defining the
+same three vars (`SANITY_STUDIO_PROJECT_ID`, `SANITY_STUDIO_DATASET`,
+`SANITY_AUTH_TOKEN`). Different commands read different files:
+
+| Command | Loader | File used |
+| --- | --- | --- |
+| `yarn studio:seed` | `dotenv` (explicit `.env.local` path, `scripts/seed.ts`) | **`.env.local`** |
+| `yarn studio:dev` | Sanity CLI (development mode) | **`.env.local`** |
+| `yarn studio:build` / `:deploy` | Sanity CLI (production mode) | **`.env.production`** (overrides `.env.local`) |
+
+Precedence for the CLI (low → high): `.env` → `.env.local` → `.env.[mode]` →
+`.env.[mode].local` (`mode` = `development` for dev, `production` for build/deploy).
+The seed script loads only `.env.local` explicitly (it does **not** read
+`.env.production`), so dev and seed always share one token while build/deploy can
+use a separate production token.
+
+`project ID` and `dataset` should match across the files; only the token is
+expected to differ (dev/seed vs. production). Rotating a token in one file but
+not the others will silently point those commands at different credentials.
+
+Deploying the Studio needs a credential with the `deployStudio` grant, which the
+local editor token lacks. Log in as a project admin and bypass the local token
+for that one command:
+
+```bash
+cd apps/studio
+yarn sanity login                       # personal admin account
+SANITY_AUTH_TOKEN= yarn studio:deploy   # empty var → CLI falls back to the login
+```
+
+Check which token a command resolves to with `yarn sanity debug --secrets`.
+
 ## Custom domain + SSL
 
 1. In Netlify → Domain settings, add `www.chidr.com.my` (and `chidr.com.my`

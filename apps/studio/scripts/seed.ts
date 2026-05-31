@@ -2,7 +2,7 @@
  * Seed Sanity with CHIDR's initial content.
  *
  * Pre-flight checks (run before any write):
- *   1. Required env vars present in apps/studio/.env
+ *   1. Required env vars present in apps/studio/.env.local
  *   2. Token can actually access the target project — catches the
  *      "wrong account/project" 401 case with an actionable error
  *
@@ -19,8 +19,13 @@
  *
  * Run: yarn studio:seed [--dry-run] [--verbose]
  */
-import 'dotenv/config';
+import { config } from 'dotenv';
 import { createClient, type SanityClient } from '@sanity/client';
+
+// Load apps/studio/.env.local — the same file `sanity dev` reads. Run via the
+// `studio` workspace (`yarn studio:seed`) so the cwd is apps/studio. Real
+// environment variables (e.g. CI) already in process.env take precedence.
+config({ path: '.env.local' });
 
 const args = new Set(process.argv.slice(2));
 const dryRun = args.has('--dry-run');
@@ -40,13 +45,13 @@ function fail(message: string, hint?: string): never {
 
 if (!projectId) {
   fail(
-    'Missing SANITY_STUDIO_PROJECT_ID in apps/studio/.env',
+    'Missing SANITY_STUDIO_PROJECT_ID in apps/studio/.env.local',
     'Copy it from sanity.io → Settings → API → Project ID',
   );
 }
 if (!token) {
   fail(
-    'Missing SANITY_AUTH_TOKEN in apps/studio/.env',
+    'Missing SANITY_AUTH_TOKEN in apps/studio/.env.local',
     'Generate at sanity.io → your project → API → Tokens (Editor scope)',
   );
 }
