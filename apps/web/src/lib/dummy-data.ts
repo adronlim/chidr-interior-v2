@@ -193,6 +193,9 @@ export const company: Company = {
   socials: [
     { platform: 'instagram', url: 'https://instagram.com/chidr' },
     { platform: 'facebook', url: 'https://facebook.com/chidr' },
+    // DUMMY number — replace with the studio's real WhatsApp line via Sanity
+    { platform: 'whatsapp', url: 'https://wa.me/60123456789' },
+    { platform: 'email', url: 'mailto:hello@chidr.com.my' },
   ],
   services: [
     {

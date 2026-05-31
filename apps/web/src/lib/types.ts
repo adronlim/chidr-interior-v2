@@ -36,7 +36,7 @@ export interface Service {
 }
 
 export interface Social {
-  platform: 'instagram' | 'facebook' | 'tiktok' | 'linkedin';
+  platform: 'instagram' | 'facebook' | 'tiktok' | 'linkedin' | 'whatsapp' | 'email';
   url: string;
 }
 
