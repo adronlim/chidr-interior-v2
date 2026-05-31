@@ -10,13 +10,13 @@ export default defineType({
     defineField({
       name: 'heading',
       type: 'string',
-      description: 'Spaces that quietly endure.',
+      description: 'E.g. Spaces that quietly endure.',
     }),
     defineField({
       name: 'subheading',
       type: 'text',
       rows: 2,
-      placeholder: 'Residential, commercial and office interiors based in Penang.',
+      description: 'E.g. Residential, commercial and office interiors based in Penang.',
     }),
     defineField({
       name: 'image',

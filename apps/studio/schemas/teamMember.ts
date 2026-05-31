@@ -11,9 +11,9 @@ export default defineType({
       name: 'name',
       type: 'string',
       validation: (rule) => rule.required(),
-      placeholder: 'Chai H.',
+      placeholder: 'E.g. Chai H.',
     }),
-    defineField({ name: 'role', type: 'string', placeholder: 'Principal Designer' }),
+    defineField({ name: 'role', type: 'string', placeholder: 'E.g. Principal Designer' }),
     defineField({
       name: 'photo',
       type: 'image',
@@ -23,7 +23,7 @@ export default defineType({
       name: 'bio',
       type: 'text',
       rows: 4,
-      placeholder: 'Fifteen years of residential and small commercial work across Penang.',
+      placeholder: 'E.g. Fifteen years of residential and small commercial work across Penang.',
     }),
     defineField({
       name: 'order',

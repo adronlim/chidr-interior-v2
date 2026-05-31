@@ -11,7 +11,7 @@ export default defineType({
       name: 'title',
       type: 'string',
       validation: (rule) => rule.required(),
-      placeholder: 'Residential',
+      placeholder: 'E.g. Residential',
     }),
     defineField({
       name: 'slug',
@@ -23,7 +23,7 @@ export default defineType({
       name: 'description',
       type: 'text',
       rows: 2,
-      placeholder: 'Homes and apartments across Penang.',
+      placeholder: 'E.g. Homes and apartments across Penang.',
     }),
   ],
 });
