@@ -1,5 +1,6 @@
 import { defineType, defineField } from 'sanity';
 import { ImageIcon } from '@sanity/icons';
+import { GalleryInput } from '../components/gallery-input';
 
 export default defineType({
   name: 'project',
@@ -49,16 +50,29 @@ export default defineType({
       name: 'coverImage',
       type: 'image',
       options: { hotspot: true },
-      validation: (rule) => rule.required(),
+      description:
+        'Required to publish. Without a cover image the project cannot be published and stays a draft — it will not appear on the website.',
+      validation: (rule) =>
+        rule.required().error('A cover image is required before this project can be published.'),
     }),
     defineField({
       name: 'gallery',
       type: 'array',
+      description:
+        'Click "Upload multiple photos" to select several files at once, or drag a batch of photos onto the grid. Each uploads as its own gallery image.',
+      options: { layout: 'grid' },
+      components: { input: GalleryInput },
       of: [
         {
           type: 'image',
           options: { hotspot: true },
-          fields: [defineField({ name: 'caption', type: 'string' })],
+          fields: [
+            defineField({
+              name: 'caption',
+              type: 'string',
+              placeholder: 'Living room, north light',
+            }),
+          ],
         },
       ],
     }),
