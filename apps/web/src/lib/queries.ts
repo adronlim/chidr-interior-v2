@@ -8,10 +8,15 @@
 const IMAGE = `{ "url": asset->url + "?auto=format", "alt": alt }`;
 const GALLERY_IMAGE = `{ "url": asset->url + "?auto=format", "alt": alt, caption }`;
 
+// A project is only shown on the website when it has a cover image. This mirrors
+// the Studio rule (coverImage is required, so a project with no cover can't be
+// published and stays a draft) and guards the site even if that's bypassed.
+const HAS_COVER = `defined(coverImage.asset)`;
+
 export const HOMEPAGE_QUERY = /* groq */ `
   {
     "hero": *[_type == "hero"][0]{ heading, subheading, "image": image${IMAGE}, ctaLabel, ctaHref },
-    "featured": *[_type == "project" && featured == true] | order(order asc)[0...6]{
+    "featured": *[_type == "project" && featured == true && ${HAS_COVER}] | order(order asc)[0...6]{
       _id, title, "slug": slug.current, year, location, "coverImage": coverImage${IMAGE},
       "category": category->{ title, "slug": slug.current }
     },
@@ -20,7 +25,7 @@ export const HOMEPAGE_QUERY = /* groq */ `
 `;
 
 export const PROJECTS_QUERY = /* groq */ `
-  *[_type == "project" && ($category == null || category->slug.current == $category)]
+  *[_type == "project" && ${HAS_COVER} && ($category == null || category->slug.current == $category)]
   | order(order asc, year desc){
     _id, title, "slug": slug.current, year, location, "coverImage": coverImage${IMAGE},
     "category": category->{ title, "slug": slug.current }
@@ -28,12 +33,12 @@ export const PROJECTS_QUERY = /* groq */ `
 `;
 
 export const PROJECT_DETAIL_QUERY = /* groq */ `
-  *[_type == "project" && slug.current == $slug][0]{
+  *[_type == "project" && slug.current == $slug && ${HAS_COVER}][0]{
     ..., "slug": slug.current,
     "coverImage": coverImage${IMAGE},
     "gallery": gallery[]${GALLERY_IMAGE},
     "category": category->{ title, "slug": slug.current },
-    "related": *[_type == "project" && _id != ^._id && category._ref == ^.category._ref][0...3]{
+    "related": *[_type == "project" && _id != ^._id && ${HAS_COVER} && category._ref == ^.category._ref][0...3]{
       _id, title, "slug": slug.current, "coverImage": coverImage${IMAGE},
       "category": category->{ title, "slug": slug.current }
     }

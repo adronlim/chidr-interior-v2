@@ -12,5 +12,9 @@ export const sanity: SanityClient | null = sanityEnabled
       dataset,
       apiVersion,
       useCdn: true,
+      // Only ever serve published documents. This excludes Sanity drafts
+      // (drafts.* IDs) from the public site even if a read token is added
+      // later for previewing — drafts must never appear on the website.
+      perspective: 'published',
     })
   : null;
