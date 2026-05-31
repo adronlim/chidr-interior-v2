@@ -11,6 +11,7 @@
  *   - company singleton
  *   - hero singleton
  *   - 9 project documents (no images — designer uploads in Studio)
+ *   - 1 team member
  *
  * Flags:
  *   --dry-run    print the plan without writing anything
@@ -139,7 +140,7 @@ const projects = [
     year: 2022,
     location: 'Bayan Lepas, Penang',
     order: 2,
-    featured: true,
+    featured: false,
   },
   {
     title: 'Queen Residence',
@@ -149,6 +150,7 @@ const projects = [
     location: 'George Town, Penang',
     order: 3,
     featured: false,
+    videoUrl: 'https://www.youtube.com/watch?v=h5ZA4oG9VrA',
   },
   {
     title: 'The Marin',
@@ -211,31 +213,25 @@ const company = {
   _type: 'company',
   name: 'CH iDesign & Renovation',
   tagline: 'Spaces that quietly endure.',
-  address: 'Lot 00, Jalan Macalister,\n10400 George Town, Penang, Malaysia',
-  phone: '+60 4-000 0000',
-  email: 'hello@chidr.com.my',
+  address: '88D-2, Jalan Tun Dr Awang,\n11900 Bayan Lepas, Penang, Malaysia',
+  phone: '+60174482826',
+  email: 'chidesign19@gmail.com',
+  mapEmbedUrl:
+    'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3972.557462858668!2d100.2815134!3d5.3314943!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x304ac03f710ecf13%3A0xfd891e36a4d9e8bf!2s88d%2C%20Jalan%20Tun%20Dr%20Awang%2C%20Bukit%20Jambul%2C%2011900%20Bayan%20Lepas%2C%20Pulau%20Pinang!5e0!3m2!1sen!2smy!4v1780090415055!5m2!1sen!2smy',
   socials: [
-    { _key: 's1', platform: 'instagram', url: 'https://instagram.com/chidr' },
-    { _key: 's2', platform: 'facebook', url: 'https://facebook.com/chidr' },
+    {
+      _key: 's1',
+      platform: 'instagram',
+      url: 'https://www.instagram.com/chidesign_renovation',
+    },
+    { _key: 's2', platform: 'whatsapp', url: 'https://wa.me/60174482826' },
   ],
   services: [
     {
       _key: 'sv1',
       title: 'Interior Design',
-      description: 'Full design service from brief to handover, for homes that age well.',
-      icon: 'pencil-ruler',
-    },
-    {
-      _key: 'sv2',
-      title: 'Renovation',
-      description: 'Build-out, joinery and finishes managed end-to-end.',
-      icon: 'hammer',
-    },
-    {
-      _key: 'sv3',
-      title: 'Space Planning',
-      description: 'Floor-plan reconfiguration for apartments and small commercial spaces.',
-      icon: 'layout-grid',
+      description: 'Full design from brief to handover',
+      icon: 'wand',
     },
   ],
 };
@@ -250,6 +246,16 @@ const hero = {
   ctaHref: '/projects',
 };
 
+const teamMembers = [
+  {
+    _id: 'team-aaron-lim',
+    _type: 'teamMember',
+    name: 'Aaron Lim',
+    role: 'Senior Designer',
+    order: 100,
+  },
+];
+
 function projectDoc(project: (typeof projects)[number]) {
   return {
     _id: `project-${project.slug}`,
@@ -261,6 +267,7 @@ function projectDoc(project: (typeof projects)[number]) {
     location: project.location,
     order: project.order,
     featured: project.featured,
+    ...('videoUrl' in project ? { videoUrl: project.videoUrl } : {}),
   };
 }
 
@@ -278,7 +285,8 @@ async function upsert(doc: { _id: string; _type: string; [key: string]: unknown 
 async function run() {
   await preflight();
 
-  const totalDocs = categories.length + 2 /* company + hero */ + projects.length;
+  const totalDocs =
+    categories.length + 2 /* company + hero */ + projects.length + teamMembers.length;
   console.log(
     `\n${dryRun ? '⚠ DRY RUN — no writes will happen' : '→ Seeding'}: ${totalDocs} documents` +
       ` to dataset "${dataset}".\n`,
@@ -293,6 +301,9 @@ async function run() {
 
   console.log('Projects');
   for (const project of projects) await upsert(projectDoc(project), project.title);
+
+  console.log('Team');
+  for (const member of teamMembers) await upsert(member, member.name);
 
   if (dryRun) {
     console.log(`\n\x1b[33m⚠\x1b[0m Dry run complete — nothing was written.`);
