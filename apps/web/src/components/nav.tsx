@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
-import { useCompany } from '@/hooks/use-company';
-
 const LINKS = [
   { to: '/', label: 'Home', end: true },
   { to: '/projects', label: 'Projects' },
@@ -11,7 +9,6 @@ const LINKS = [
 ];
 
 export default function Nav() {
-  const { data: company } = useCompany();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
@@ -39,10 +36,8 @@ export default function Nav() {
         }`}
       >
         <Link to="/" className="font-display text-xl lg:text-2xl tracking-tighter leading-none">
-          <span>{company?.logoWordmark?.primary ?? 'CH iDesign'}</span>
-          {company?.logoWordmark?.secondary && (
-            <span className="text-ash"> {company?.logoWordmark?.secondary}</span>
-          )}
+          <span>CH iDesign</span>
+          <span className="text-ash"> & Renovation</span>
         </Link>
 
         <nav className="hidden lg:flex items-center gap-10">
