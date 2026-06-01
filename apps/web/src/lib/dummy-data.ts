@@ -183,7 +183,6 @@ export const projects: Project[] = [
 export const company: Company = {
   name: 'CH iDesign & Renovation',
   tagline: 'Spaces that quietly endure.',
-  logoWordmark: { primary: 'CH iDesign', secondary: '& Renovation' },
   // DUMMY contact info — replace with real values via Sanity
   address: 'Lot 00, Jalan Macalister,\n10400 George Town, Penang, Malaysia',
   phone: '+60 4-000 0000',

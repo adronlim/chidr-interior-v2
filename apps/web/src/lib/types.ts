@@ -43,7 +43,6 @@ export interface Social {
 export interface Company {
   name: string;
   tagline: string;
-  logoWordmark: { primary: string; secondary?: string };
   address: string;
   phone: string;
   email: string;
