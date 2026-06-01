@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CH iDesign — Inner-Inspired Palette Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   INNER-INSPIRED PALETTE
+   bone    #F8F4EE  — body background (warmer)
+   ink     #1A1614  — body text (warmer black)
+   ash     #8C8478  — secondary text (warm gray)
+   gold    #C8A97E  — champagne accent (Inner's signature)
+   line    #E4DDD4  — hairlines
+   canvas  #FFFFFF  — card/contrast white
+   obsidian #0D0D0D — dramatic dark sections (replaces ink-bg)
+═══════════════════════════════════════════ */
+:root {
+  --bone:     #F8F4EE;
+  --ink:      #1A1614;
+  --ash:      #8C8478;
+  --gold:     #C8A97E;
+  --line:     #E4DDD4;
+  --canvas:   #FFFFFF;
+  --obsidian: #0D0D0D;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--bone); color: var(--ink); font-family: 'Inter', system-ui, sans-serif; line-height: 1.6; }
+
+/* ── Type ─────────────────────────────────── */
+.display     { font-family: 'Cormorant Garamond', Georgia, serif; }
+.eyebrow     { font-size: 0.65rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ash); }
+.eyebrow-gold{ font-size: 0.65rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); }
+
+/* ── Palette strip ─────────────────────────── */
+#palette { padding: 2.5rem 4rem; border-bottom: 1px solid var(--line); }
+.swatch-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.25rem; }
+.swatch-block { width: 130px; }
+.swatch-color { height: 72px; border-radius: 3px; }
+.swatch-info  { margin-top: .5rem; }
+.swatch-name  { font-size: 0.72rem; font-weight: 500; }
+.swatch-hex   { font-size: 0.68rem; color: var(--ash); }
+.tag-new      { display:inline-block; margin-top:3px; font-size:0.58rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--gold); border:1px solid var(--gold); padding:1px 5px; }
+.tag-changed  { display:inline-block; margin-top:3px; font-size:0.58rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--ash); border:1px solid var(--line); padding:1px 5px; }
+.old-val      { font-size:0.62rem; color:var(--line); text-decoration:line-through; margin-top:1px; }
+
+/* ── NAV ───────────────────────────────────── */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--obsidian);
+  border-bottom: 1px solid rgba(200,169,126,.18);
+  padding: 1.1rem 4rem;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.logo { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 400; letter-spacing: -.01em; color: var(--bone); }
+.logo span { color: rgba(248,244,238,.35); }
+.nav-links { display: flex; gap: 2.5rem; align-items: center; }
+.nav-link { font-size: 0.68rem; letter-spacing: .12em; text-transform: uppercase; color: rgba(248,244,238,.5); text-decoration: none; transition: color .2s; }
+.nav-link:hover, .nav-link.active { color: var(--bone); }
+.nav-cta { font-size: 0.68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); border: 1px solid rgba(200,169,126,.4); padding: .4rem 1rem; text-decoration: none; transition: all .2s; }
+.nav-cta:hover { background: var(--gold); color: var(--obsidian); border-color: var(--gold); }
+
+/* ── HERO (full dark) ───────────────────────── */
+.hero {
+  background: var(--obsidian);
+  min-height: 90vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  position: relative;
+  overflow: hidden;
+}
+.hero-left {
+  padding: 6rem 4rem 6rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  position: relative;
+  z-index: 2;
+}
+.hero-number { font-family:'Cormorant Garamond',serif; font-size:9rem; font-weight:300; color:rgba(255,255,255,.04); position:absolute; top:2rem; left:3rem; line-height:1; letter-spacing:-.04em; user-select:none; }
+.hero-eyebrow { margin-bottom: 2rem; display:flex; align-items:center; gap:.75rem; }
+.hero-eyebrow::before { content:''; display:inline-block; width:2rem; height:1px; background:var(--gold); }
+.hero-h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3.5rem, 5vw, 5.5rem);
+  font-weight: 400;
+  letter-spacing: -.025em;
+  line-height: 1.0;
+  color: var(--bone);
+  margin-bottom: 1.75rem;
+}
+.hero-h1 em { font-style: italic; color: var(--gold); }
+.hero-sub { color: rgba(248,244,238,.45); font-size: .9rem; line-height: 1.75; max-width: 36ch; margin-bottom: 2.5rem; }
+.hero-actions { display: flex; gap: 1.25rem; align-items: center; flex-wrap: wrap; }
+.btn-primary {
+  font-size: .68rem; letter-spacing: .14em; text-transform: uppercase;
+  padding: .75rem 2rem;
+  background: var(--gold); color: var(--obsidian);
+  border: 1px solid var(--gold);
+  text-decoration: none; transition: all .25s;
+}
+.btn-primary:hover { background: transparent; color: var(--gold); }
+.btn-outline {
+  font-size: .68rem; letter-spacing: .14em; text-transform: uppercase;
+  padding: .75rem 2rem;
+  background: transparent; color: var(--bone);
+  border: 1px solid rgba(248,244,238,.2);
+  text-decoration: none; transition: all .25s;
+}
+.btn-outline:hover { border-color: var(--bone); }
+.btn-ghost-light { font-size:.68rem; letter-spacing:.12em; text-transform:uppercase; color:rgba(248,244,238,.4); background:none; border:none; cursor:pointer; transition:color .2s; }
+.btn-ghost-light:hover { color:var(--gold); }
+.hero-right {
+  background: #1A1614;
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,.15);
+  font-size:.7rem; letter-spacing:.12em; text-transform:uppercase;
+}
+.hero-right::before {
+  content:''; position:absolute; inset:0;
+  background: linear-gradient(135deg, rgba(200,169,126,.06) 0%, transparent 60%);
+}
+.hero-scroll { position:absolute; bottom:2.5rem; left:4rem; display:flex; align-items:center; gap:.75rem; }
+.hero-scroll span { font-size:.6rem; letter-spacing:.14em; text-transform:uppercase; color:rgba(248,244,238,.3); }
+.hero-scroll::after { content:''; display:block; width:3rem; height:1px; background:rgba(248,244,238,.2); }
+
+/* ── INTRO STRIP (bone) ─────────────────────── */
+.intro {
+  background: var(--bone);
+  padding: 5rem 4rem;
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 5rem;
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+}
+.intro-label { margin-bottom: .75rem; }
+.intro-h2 { font-family:'Cormorant Garamond',serif; font-size:2.8rem; font-weight:400; letter-spacing:-.02em; line-height:1.1; color:var(--ink); }
+.intro-body { color:var(--ash); font-size:.88rem; line-height:1.85; }
+.intro-link { display:inline-flex; align-items:center; gap:.6rem; margin-top:1.5rem; font-size:.68rem; letter-spacing:.12em; text-transform:uppercase; color:var(--ink); text-decoration:none; border-bottom:1px solid var(--gold); padding-bottom:2px; }
+.intro-link:hover { color:var(--gold); }
+
+/* ── STATS (obsidian) ──────────────────────── */
+.stats {
+  background: var(--obsidian);
+  padding: 4.5rem 4rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  border-bottom: 1px solid rgba(200,169,126,.12);
+}
+.stat-item { padding-left: 1.5rem; border-left: 1px solid rgba(200,169,126,.2); }
+.stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3.5rem; font-weight: 300; letter-spacing: -.03em; line-height: 1;
+  color: var(--bone);
+}
+.stat-num sup { font-size: 1.2rem; color: var(--gold); vertical-align: super; }
+.stat-label { font-size:.62rem; letter-spacing:.14em; text-transform:uppercase; color:rgba(248,244,238,.35); margin-top:.5rem; }
+
+/* ── PROJECTS (bone) ─────────────────────────── */
+.projects-section {
+  background: var(--bone);
+  padding: 5rem 4rem;
+}
+.section-header { display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:2.5rem; }
+.section-link { font-size:.68rem; letter-spacing:.12em; text-transform:uppercase; color:var(--ink); text-decoration:none; display:flex; align-items:center; gap:.5rem; }
+.section-link::after { content:'→'; }
+.section-link:hover { color:var(--gold); }
+
+.chips { display:flex; gap:.5rem; margin-bottom:2.25rem; flex-wrap:wrap; }
+.chip { font-size:.62rem; letter-spacing:.12em; text-transform:uppercase; padding:.3rem .85rem; border:1px solid var(--line); background:transparent; color:var(--ash); cursor:pointer; transition:all .15s; }
+.chip:hover { border-color:var(--ink); color:var(--ink); }
+.chip.active { background:var(--obsidian); color:var(--bone); border-color:var(--obsidian); }
+
+.card-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:1.5rem; }
+.card-img {
+  background:var(--line); aspect-ratio:4/3; overflow:hidden;
+  display:flex; align-items:center; justify-content:center;
+  font-size:.62rem; letter-spacing:.1em; text-transform:uppercase; color:var(--ash);
+  position:relative;
+}
+.card-img::after { content:''; position:absolute; inset:0; background:rgba(13,13,13,0); transition:background .3s; }
+.card:hover .card-img::after { background:rgba(13,13,13,.12); }
+.card-body { padding:.9rem 0 0; }
+.card-meta { display:flex; gap:.6rem; font-size:.62rem; letter-spacing:.08em; text-transform:uppercase; color:var(--ash); }
+.card-meta span::before { content:'·'; margin-right:.6rem; }
+.card-meta span:first-child::before { display:none; }
+.card-title { font-family:'Cormorant Garamond',serif; font-size:1.25rem; font-weight:400; letter-spacing:-.01em; margin-top:.3rem; color:var(--ink); }
+.card-title-link { color:inherit; text-decoration:none; }
+.card-title-link:hover { color:var(--gold); }
+
+/* ── FEATURED (dark + gold rule) ──────────────── */
+.featured {
+  background: var(--obsidian);
+  padding: 5rem 4rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+}
+.featured-img-wrap { position:relative; }
+.featured-img {
+  background: #1A1614; aspect-ratio:3/4;
+  display:flex; align-items:center; justify-content:center;
+  font-size:.62rem; letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.2);
+}
+.featured-img-num {
+  position:absolute; top:-1.5rem; right:-1.5rem;
+  font-family:'Cormorant Garamond',serif; font-size:7rem; font-weight:300;
+  color:rgba(255,255,255,.05); line-height:1; letter-spacing:-.04em; user-select:none;
+}
+.featured-content { color:var(--bone); }
+.featured-rule { width:2.5rem; height:1px; background:var(--gold); margin-bottom:1.75rem; }
+.featured-h2 { font-family:'Cormorant Garamond',serif; font-size:2.8rem; font-weight:400; letter-spacing:-.02em; line-height:1.1; margin-bottom:1.25rem; }
+.featured-h2 em { font-style:italic; color:var(--gold); }
+.featured-body { color:rgba(248,244,238,.45); font-size:.88rem; line-height:1.8; margin-bottom:2rem; }
+.featured-meta { display:flex; gap:2rem; padding-top:1.5rem; border-top:1px solid rgba(248,244,238,.08); margin-bottom:2rem; }
+.featured-meta-item label { display:block; font-size:.6rem; letter-spacing:.12em; text-transform:uppercase; color:rgba(248,244,238,.3); margin-bottom:.3rem; }
+.featured-meta-item span { font-size:.82rem; color:var(--bone); }
+
+/* ── CONTACT FORM (bone) ──────────────────────── */
+.contact-section {
+  background: var(--bone);
+  padding: 5rem 4rem;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 6rem;
+  border-top: 1px solid var(--line);
+}
+.contact-info-label { margin-bottom:.75rem; }
+.contact-h2 { font-family:'Cormorant Garamond',serif; font-size:2.4rem; font-weight:400; letter-spacing:-.02em; line-height:1.1; margin-bottom:1.5rem; }
+.contact-detail { font-size:.84rem; color:var(--ash); line-height:2; }
+.contact-detail a { color:var(--gold); text-decoration:none; }
+.form-group { margin-bottom:1.5rem; }
+.form-label { display:block; font-size:.62rem; letter-spacing:.12em; text-transform:uppercase; color:var(--ash); margin-bottom:.5rem; }
+.form-input {
+  width:100%; background:transparent; border:none; border-bottom:1px solid var(--line);
+  padding:.6rem 0; font-size:.9rem; font-family:'Inter',sans-serif; color:var(--ink);
+  outline:none; transition:border-color .2s;
+}
+.form-input:focus { border-bottom-color:var(--ink); }
+.form-input::placeholder { color:rgba(140,132,120,.5); }
+.form-input.error { border-bottom-color:var(--gold); }
+.form-error-msg { font-size:.7rem; color:var(--gold); margin-top:.3rem; }
+.btn-submit {
+  font-size:.68rem; letter-spacing:.14em; text-transform:uppercase;
+  padding:.75rem 2.5rem; background:var(--obsidian); color:var(--bone);
+  border:1px solid var(--obsidian); cursor:pointer; transition:all .25s; margin-top:.5rem;
+}
+.btn-submit:hover { background:var(--gold); border-color:var(--gold); color:var(--obsidian); }
+
+/* ── FOOTER (obsidian) ────────────────────────── */
+footer {
+  background: var(--obsidian);
+  padding: 5rem 4rem 2.5rem;
+  border-top: 1px solid rgba(200,169,126,.12);
+}
+.footer-top { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:3rem; padding-bottom:3rem; border-bottom:1px solid rgba(255,255,255,.06); }
+.footer-brand-logo { font-family:'Cormorant Garamond',serif; font-size:1.6rem; font-weight:400; letter-spacing:-.01em; color:var(--bone); margin-bottom:.75rem; }
+.footer-brand-logo span { color:rgba(248,244,238,.25); }
+.footer-tagline { font-size:.82rem; color:rgba(248,244,238,.35); line-height:1.75; max-width:24ch; }
+.footer-col-label { font-size:.6rem; letter-spacing:.15em; text-transform:uppercase; color:var(--gold); margin-bottom:1.25rem; }
+.footer-col-links { list-style:none; display:flex; flex-direction:column; gap:.65rem; }
+.footer-col-links a { font-size:.82rem; color:rgba(248,244,238,.45); text-decoration:none; transition:color .2s; }
+.footer-col-links a:hover { color:var(--bone); }
+.footer-contact-text { font-size:.82rem; color:rgba(248,244,238,.45); line-height:2; }
+.footer-contact-text a { color:var(--gold); text-decoration:none; }
+.footer-bottom {
+  display:flex; justify-content:space-between; align-items:center;
+  padding-top:2rem; margin-top:.25rem;
+}
+.footer-copy { font-size:.65rem; color:rgba(248,244,238,.2); letter-spacing:.04em; }
+.footer-socials { display:flex; gap:1.5rem; }
+.footer-socials a { font-size:.65rem; letter-spacing:.1em; text-transform:uppercase; color:rgba(248,244,238,.3); text-decoration:none; transition:color .2s; }
+.footer-socials a:hover { color:var(--gold); }
+.gold-line { width:1.5rem; height:1px; background:var(--gold); margin-bottom:1rem; }
+
+/* ── PALETTE ANNOTATION BAR ─────────────────── */
+.palette-bar {
+  background: var(--ink);
+  padding: 1.25rem 4rem;
+  display: flex;
+  gap: 1.75rem;
+  align-items: center;
+  flex-wrap: wrap;
+  position: sticky; bottom: 0; z-index: 200;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+.pb-swatch { display:flex; align-items:center; gap:.5rem; }
+.pb-dot { width:14px; height:14px; border-radius:50%; flex-shrink:0; border:1px solid rgba(255,255,255,.1); }
+.pb-name { font-size:.62rem; letter-spacing:.08em; color:rgba(255,255,255,.45); }
+.pb-hex { font-size:.62rem; color:rgba(255,255,255,.2); margin-left:.25rem; }
+</style>
+</head>
+<body>
+
+<!-- ══ PALETTE ANNOTATION (top) ══ -->
+<div id="palette" style="background:var(--obsidian);">
+  <p class="eyebrow-gold">Inner-Inspired Palette — CH iDesign Preview</p>
+  <div class="swatch-row" style="margin-top:1.25rem;">
+    <div class="swatch-block">
+      <div class="swatch-color" style="background:#F8F4EE;border:1px solid #E4DDD4;"></div>
+      <div class="swatch-info" style="color:rgba(248,244,238,.8);">
+        <div class="swatch-name">bone</div>
+        <div class="swatch-hex">#F8F4EE</div>
+        <div class="tag-changed">warmer</div>
+        <div class="old-val">was #F5F1EA</div>
+      </div>
+    </div>
+    <div class="swatch-block">
+      <div class="swatch-color" style="background:#1A1614;"></div>
+      <div class="swatch-info" style="color:rgba(248,244,238,.8);">
+        <div class="swatch-name">ink</div>
+        <div class="swatch-hex">#1A1614</div>
+        <div class="tag-changed">warmer</div>
+        <div class="old-val">was #1A1A1A</div>
+      </div>
+    </div>
+    <div class="swatch-block">
+      <div class="swatch-color" style="background:#8C8478;"></div>
+      <div class="swatch-info" style="color:rgba(248,244,238,.8);">
+        <div class="swatch-name">ash</div>
+        <div class="swatch-hex">#8C8478</div>
+        <div class="tag-changed">warmer</div>
+        <div class="old-val">was #8A8580</div>
+      </div>
+    </div>
+    <div class="swatch-block">
+      <div class="swatch-color" style="background:#C8A97E;"></div>
+      <div class="swatch-info" style="color:rgba(248,244,238,.8);">
+        <div class="swatch-name">brass → gold</div>
+        <div class="swatch-hex">#C8A97E</div>
+        <div class="tag-changed">champagne</div>
+        <div class="old-val">was #A6814C</div>
+      </div>
+    </div>
+    <div class="swatch-block">
+      <div class="swatch-color" style="background:#E4DDD4;border:1px solid #CCC;"></div>
+      <div class="swatch-info" style="color:rgba(248,244,238,.8);">
+        <div class="swatch-name">line</div>
+        <div class="swatch-hex">#E4DDD4</div>
+        <div style="font-size:.62rem;color:rgba(248,244,238,.3);">unchanged</div>
+      </div>
+    </div>
+    <div class="swatch-block">
+      <div class="swatch-color" style="background:#0D0D0D;border:1px solid rgba(255,255,255,.1);"></div>
+      <div class="swatch-info" style="color:rgba(248,244,238,.8);">
+        <div class="swatch-name">obsidian</div>
+        <div class="swatch-hex">#0D0D0D</div>
+        <div class="tag-new">★ new token</div>
+      </div>
+    </div>
+  </div>
+  <p style="font-size:.7rem;color:rgba(248,244,238,.25);margin-top:1.25rem;line-height:1.7;">
+    Scroll to see: Nav → Hero → About strip → Stats → Projects → Featured → Contact → Footer
+  </p>
+</div>
+
+<!-- ══ NAV ══ -->
+<nav>
+  <div class="logo">CH iDesign<span> & Renovation</span></div>
+  <div class="nav-links">
+    <a class="nav-link active" href="#">Projects</a>
+    <a class="nav-link" href="#">Studio</a>
+    <a class="nav-link" href="#">Process</a>
+    <a class="nav-cta" href="#">Get in touch</a>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-number">01</div>
+  <div class="hero-left">
+    <div class="hero-eyebrow">
+      <span class="eyebrow-gold">Interior Design · Penang</span>
+    </div>
+    <h1 class="hero-h1">
+      Spaces that<br>
+      <em>quietly</em><br>
+      endure.
+    </h1>
+    <p class="hero-sub">
+      Residential, commercial and office interiors crafted for lives well lived, based in Penang.
+    </p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="#">View Projects</a>
+      <a class="btn-outline" href="#">Our Story</a>
+    </div>
+    <div class="hero-scroll">
+      <span>Scroll</span>
+    </div>
+  </div>
+  <div class="hero-right">
+    Full-bleed photography
+  </div>
+</section>
+
+<!-- ══ INTRO STRIP ══ -->
+<section class="intro">
+  <div>
+    <div class="intro-label">
+      <span class="eyebrow">The Studio</span>
+    </div>
+    <h2 class="display intro-h2">
+      Design that outlasts<br>
+      <em>the moment.</em>
+    </h2>
+    <a class="intro-link" href="#">Discover our approach</a>
+  </div>
+  <div>
+    <p class="intro-body">
+      CH iDesign & Renovation brings together interior design, space planning and renovation into a single, coherent practice. We work across Penang — with private homes, boutique commercial spaces and offices — always guided by the same principle: restraint in material, richness in experience.
+    </p>
+    <p class="intro-body" style="margin-top:1rem;">
+      Every project begins with listening. We study how a family moves through their home, how a team inhabits their workspace, how light shifts across a room at different hours. From that understanding, we build interiors that earn their place quietly and lastingly.
+    </p>
+  </div>
+</section>
+
+<!-- ══ STATS ══ -->
+<div class="stats">
+  <div class="stat-item">
+    <div class="stat-num">12<sup>+</sup></div>
+    <div class="stat-label">Years of practice</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">180<sup>+</sup></div>
+    <div class="stat-label">Projects completed</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">3</div>
+    <div class="stat-label">Design disciplines</div>
+  </div>
+  <div class="stat-item" style="border-left:none; display:flex; align-items:center; justify-content:flex-end;">
+    <a class="btn-outline" href="#" style="align-self:center;">Work with us</a>
+  </div>
+</div>
+
+<!-- ══ PROJECTS ══ -->
+<section class="projects-section">
+  <div class="section-header">
+    <div>
+      <span class="eyebrow">Selected work</span>
+      <h2 class="display" style="font-size:2.2rem;font-weight:400;letter-spacing:-.02em;margin-top:.3rem;">Recent Projects</h2>
+    </div>
+    <a class="section-link" href="#">View all projects</a>
+  </div>
+
+  <div class="chips">
+    <button class="chip active">All</button>
+    <button class="chip">Residential</button>
+    <button class="chip">Commercial</button>
+    <button class="chip">Office</button>
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-img">Photography</div>
+      <div class="card-body">
+        <div class="card-meta"><span>Residential</span><span>2024</span><span>Penang</span></div>
+        <div class="card-title"><a class="card-title-link" href="#">Desa Pinang</a></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-img" style="background:#ECE7DF;">Photography</div>
+      <div class="card-body">
+        <div class="card-meta"><span>Residential</span><span>2023</span><span>Penang</span></div>
+        <div class="card-title"><a class="card-title-link" href="#">QuayWest Residence</a></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-img" style="background:#E8E2DB;">Photography</div>
+      <div class="card-body">
+        <div class="card-meta"><span>Office</span><span>2023</span><span>Penang</span></div>
+        <div class="card-title"><a class="card-title-link" href="#">Jelutong Office</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FEATURED PROJECT ══ -->
+<section class="featured">
+  <div class="featured-img-wrap">
+    <div class="featured-img-num">02</div>
+    <div class="featured-img">Photography</div>
+  </div>
+  <div class="featured-content">
+    <div class="featured-rule"></div>
+    <span class="eyebrow-gold">Featured project</span>
+    <h2 class="display featured-h2" style="margin-top:.75rem;">
+      Queen<br><em>Residence</em>
+    </h2>
+    <p class="featured-body">
+      A 1,800 sqft apartment in George Town transformed through careful material selection and a restrained palette. Walnut joinery, honed marble and woven linen sit in proportion — nothing competes, everything belongs.
+    </p>
+    <div class="featured-meta">
+      <div class="featured-meta-item">
+        <label>Location</label>
+        <span>George Town, Penang</span>
+      </div>
+      <div class="featured-meta-item">
+        <label>Year</label>
+        <span>2023</span>
+      </div>
+      <div class="featured-meta-item">
+        <label>Area</label>
+        <span>1,800 sqft</span>
+      </div>
+    </div>
+    <a class="btn-primary" href="#">View project</a>
+  </div>
+</section>
+
+<!-- ══ CONTACT ══ -->
+<section class="contact-section">
+  <div>
+    <div class="contact-info-label">
+      <span class="eyebrow">Get in touch</span>
+    </div>
+    <h2 class="display contact-h2">Let's build<br><em>something</em><br>enduring.</h2>
+    <div class="contact-detail">
+      88D-2, Jalan Tun Dr Awang<br>
+      Bayan Lepas, Penang<br><br>
+      <a href="#">+60 17-448 2826</a><br>
+      <a href="#">chidesign19@gmail.com</a><br><br>
+      Mon – Fri · 10:00 – 18:00
+    </div>
+  </div>
+  <form>
+    <div class="form-group">
+      <label class="form-label">Full name</label>
+      <input class="form-input" type="text" placeholder="Your name">
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input class="form-input error" type="email" placeholder="you@email.com">
+        <div class="form-error-msg">Enter a valid email address</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Phone (optional)</label>
+        <input class="form-input" type="tel" placeholder="+60">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Message</label>
+      <input class="form-input" type="text" placeholder="Tell us about your project…">
+    </div>
+    <div style="display:flex;gap:1.25rem;align-items:center;margin-top:.75rem;">
+      <button class="btn-submit" type="submit">Send enquiry</button>
+      <button class="btn-ghost-light" type="reset">Clear form</button>
+    </div>
+  </form>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand-logo">CH iDesign<span> & Renovation</span></div>
+      <p class="footer-tagline">Spaces that quietly endure. Residential, commercial and office interiors based in Penang.</p>
+    </div>
+    <div>
+      <div class="footer-col-label">Navigate</div>
+      <ul class="footer-col-links">
+        <li><a href="#">Projects</a></li>
+        <li><a href="#">Studio</a></li>
+        <li><a href="#">Process</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-label">Disciplines</div>
+      <ul class="footer-col-links">
+        <li><a href="#">Interior Design</a></li>
+        <li><a href="#">Renovation</a></li>
+        <li><a href="#">Space Planning</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-label">Studio</div>
+      <div class="footer-contact-text">
+        88D-2, Jalan Tun Dr Awang<br>
+        Bayan Lepas, Penang<br><br>
+        <a href="#">+60 17-448 2826</a><br>
+        <a href="#">chidesign19@gmail.com</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2025 CH iDesign & Renovation. All rights reserved.</span>
+    <div class="footer-socials">
+      <a href="#">Instagram</a>
+      <a href="#">WhatsApp</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ══ STICKY PALETTE BAR ══ -->
+<div class="palette-bar">
+  <div class="pb-swatch"><div class="pb-dot" style="background:#F8F4EE;border-color:#E4DDD4;"></div><span class="pb-name">bone</span><span class="pb-hex">#F8F4EE</span></div>
+  <div class="pb-swatch"><div class="pb-dot" style="background:#1A1614;"></div><span class="pb-name">ink</span><span class="pb-hex">#1A1614</span></div>
+  <div class="pb-swatch"><div class="pb-dot" style="background:#8C8478;"></div><span class="pb-name">ash</span><span class="pb-hex">#8C8478</span></div>
+  <div class="pb-swatch"><div class="pb-dot" style="background:#C8A97E;"></div><span class="pb-name">gold</span><span class="pb-hex">#C8A97E</span></div>
+  <div class="pb-swatch"><div class="pb-dot" style="background:#E4DDD4;border-color:rgba(255,255,255,.2);"></div><span class="pb-name">line</span><span class="pb-hex">#E4DDD4</span></div>
+  <div class="pb-swatch"><div class="pb-dot" style="background:#0D0D0D;border-color:rgba(255,255,255,.15);"></div><span class="pb-name">obsidian</span><span class="pb-hex">#0D0D0D</span></div>
+  <div style="margin-left:auto;font-size:.62rem;color:rgba(255,255,255,.25);">Say "proceed" to apply to the actual site →</div>
+</div>
+
+</body>
+</html>
