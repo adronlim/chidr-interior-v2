@@ -32,8 +32,8 @@ export default function Footer() {
   // The footer always renders, even before/without a company document — empty
   // company fields fall back to the known brand defaults (and a contact
   // placeholder) so the section fills its position instead of collapsing.
-  const brandPrimary = company?.logoWordmark?.primary ?? 'CH iDesign';
-  const brandSecondary = company?.logoWordmark?.secondary ?? '& Renovation';
+  const brandPrimary = 'CH iDesign';
+  const brandSecondary = '& Renovation';
   const tagline = company?.tagline ?? 'Spaces that quietly endure.';
   const name = company?.name ?? 'CH iDesign & Renovation';
   const address = company?.address;
