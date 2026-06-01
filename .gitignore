@@ -15,3 +15,5 @@ dist/
 coverage/
 .netlify/
 .vercel/
+design-extract-output/
+apps/studio/schema.json
